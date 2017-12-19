@@ -85,7 +85,7 @@
 
 ## 3. 툴팁.
 
-툴팁은 앵커 또는 폼 콘트롤 요소에 대한 참고용 콘텐츠입니다. 보통 마우스 오버 또는 키보드 초점을 받으면 표시하는 내용이지만 화면에 항상 표시할 수도 있습니다. 툴팁 요소에 `role="tooltip"` 속성으로 명시할 수 있습니다. 툴팁을 유발하는 앵커 또는 콘트롤에 `aria-describedby="ID reference list"` 속성을 명시하여 연결해야 합니다. `role="alert"` 또는 `role="alertdialog"` 또는 `role="dialog"` 콘텐츠와 혼동하지 않도록 유의합니다.
+툴팁은 앵커 또는 폼 콘트롤 요소에 대한 참고용 콘텐츠입니다. 보통 마우스 오버 또는 키보드 초점을 받으면 표시하는 내용이지만 화면에 항상 표시할 수도 있습니다. 툴팁 요소에 `role="tooltip"` 속성으로 명시할 수 있습니다. 툴팁을 유발하는 앵커 또는 콘트롤에 `aria-describedby="ID reference list"` 속성을 명시하여 연결합니다. `role="alert"` 또는 `role="alertdialog"` 또는 `role="dialog"` 콘텐츠와 혼동하지 않도록 유의합니다.
 
 ```
 <!-- O: 인풋 툴팁 -->
@@ -99,20 +99,35 @@
 ```
 
 
-## 4. 알럿, 알럿 대화상자.
 
-알럿은 일시적으로 민감한 정보를 사용자에게 전달하는 콘텐츠입니다. 운영체제 또는 브라우저에서 제공하는 시스템 알럿 대신 HTML 마크업으로 스타일 처리한 알럿을 제공할 수 있습니다. 알럿 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시해야 합니다. 초점을 받을 필요가 없는 알럿은 `role="alert"` 으로 처리합니다.
+## 4. 알럿.
 
-콘트롤(input, textarea, select, button) 또는 링크(a)와 같이 사용자 인터렉션을 포함한 알럿이라면 `role="alertdialog"` 으로 처리합니다. 알럿 대화상자에는 `aria-labelledby="ID reference list"` 그리고 `aria-describedby="ID reference list"` 속성으로 알럿의 제목과 설명을 연결해야 합니다. 알럿 대화상자를 표시할 때 모달 윈도우 형식으로 표시하고 키보드 초점을 대화상자 내부 콘트롤(예를 들면 '확인' 버튼)으로 옮겨야 합니다. 초점은 대화상자 안에서 벗어나지 않아야 합니다.
+알럿은 일시적으로 민감한 정보를 사용자에게 전달하는 콘텐츠입니다. 운영체제 또는 브라우저에서 제공하는 시스템 알럿 대신 HTML 마크업으로 스타일 처리한 알럿을 제공할 수 있습니다.
+
+초점을 받을 필요가 없는 알럿은 `role="alert"` 으로 처리합니다. 알럿 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
 
 ```
 <!-- O: 알럿 -->
 <div role="alert" aria-live="assertive">
-    <p>유효한 이메일 주소가 아닙니다.</p>
+    <p>로그인 후 이용할 수 있습니다.</p>
 </div>
+```
 
+초점을 받을 수 있는 사용자 인터렉션 요소를 포함하고 있다면 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 콘트롤(`input`, `textaria`)의 실시간 오류를 표시하는 경우라면 알럿 대신 콘트롤 요소에 `aria-invalid="true|false"` 속성과 `aria-errormessage="ID reference"` 속성을 사용합니다.
+
+
+
+## 5. 알럿 대화상자.
+
+사용자 인터렉션 요소(`input`, `textarea`, `select`, `button`, `a`)를 포함한 알럿이라면 알럿 `role="alert"` 대신 알럿 대화상자 `role="alertdialog"`를 사용합니다. 알럿 대화상자 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
+
+ 알럿 대화상자에는 `aria-labelledby="ID reference list"` 그리고 `aria-describedby="ID reference list"` 속성으로 알럿의 제목과 설명을 연결합니다.
+
+ 알럿 대화상자는 모달 윈도우 스타일로 처리한 다음 `aria-modal="true"` 속성을 추가합니다. 알럿 대화상자를 표시할 때 키보드 초점을 대화상자 내부 콘트롤(예를 들면 '확인' 버튼)으로 옮겨야 합니다. 알럿 대화상자를 표시하는 동안 초점은 대화상자 안에서 벗어나지 않아야 합니다.
+
+```
 <!-- O: 알럿 대화상자 -->
-<div role="alertdialog" aria-live="assertive" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
+<div role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
     <h2 id="TITLE">레진패스 안내</h2>
     <p id="DESCRIPTION">이 작품의 유료 에피소드 열람 시 자동으로 구매합니다. 레진패스를 적용하시겠습니까?</p>
     <button type="button">레진패스 적용</button>
@@ -120,5 +135,5 @@
 </div>
 ```
 
-대중적인 브라우저가 `<dialog>` 요소를 충분히 지원하면 `role="alertdialog"` 또는 `role="dialog"` 속성 대신 `<dialog>` 요소를 사용하는 것이 바람직합니다.
+대중적인 브라우저가 `<dialog>` 요소를 충분히 지원하면 `role="alertdialog"` 속성 대신 `<dialog>` 요소를 사용하는 것이 바람직합니다.
 

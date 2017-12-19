@@ -8,8 +8,8 @@
 <element role="tablist">
 <element role="tab">
 <element role="tabpanel">
-<element role="alert">
 <element role="tooltip">
+<element role="alert">
 <element role="dialog">
 <element role="complementary">
 <element role="none">
@@ -75,4 +75,20 @@
         화요일엔 노란 장미를...
     </div>
 </div>
+```
+
+
+## 3. 툴팁 콘텐츠.
+
+툴팁은 앵커 또는 폼 콘트롤 요소에 대한 참고용 콘텐츠입니다. 보통 마우스 오버 또는 키보드 초점을 받으면 표시하는 내용이지만 화면에 항상 표시할 수도 있습니다. 툴팁 요소에 `role="tooltip"` 속성으로 명시할 수 있습니다. 툴팁을 유발하는 앵커 또는 콘트롤에 `aria-describedby="ID reference list"` 속성을 명시하여 연결해야 합니다. `role="alert"` 또는 `role="dialog"` 콘텐츠와 혼동하지 않도록 유의합니다.
+
+```
+<!-- O -->
+<label for="tel">전화번호</label>
+<input id="tel" type="tel" aria-describedby="TIP-TEL">
+<p id="TIP-TEL" role="tooltip" hidden>하이픈(-) 없이 숫자만 입력.</p>
+
+<!-- O -->
+<button aria-describedby="TIP-DEL">삭제</button>
+<p id="TIP-DEL" role="tooltip" hidden>삭제 후 복원할 수 없음.</p>
 ```

@@ -47,7 +47,7 @@
 
 
 
-## 2. 탭 목록, 탭, 탭 패널.
+## 2. 탭 목록, 탭, 탭 패널(role="tablist", role="tab", role="tabpanel").
 
 탭은 스타일을 의미하는 것이 아니라 콘텐츠에 색인을 제공하는 구조(tablist, tab, tabpanel)를 의미합니다. 사이트 탐색 도구에 해당하는 요소는 `nav > h2 + ul` 또는 `aside > h2 + ul` 구조로 마크업 합니다.
 
@@ -83,9 +83,9 @@
 
 
 
-## 3. 툴팁.
+## 3. 툴팁(role="tooltip").
 
-툴팁은 앵커 또는 폼 콘트롤 요소에 대한 참고용 콘텐츠입니다. 보통 마우스 오버 또는 키보드 초점을 받으면 표시하는 내용이지만 화면에 항상 표시할 수도 있습니다. 툴팁 요소에 `role="tooltip"` 속성으로 명시할 수 있습니다. 툴팁을 유발하는 앵커 또는 콘트롤에 `aria-describedby="ID reference list"` 속성을 명시하여 연결합니다. `role="alert"` 또는 `role="alertdialog"` 또는 `role="dialog"` 콘텐츠와 혼동하지 않도록 유의합니다.
+툴팁은 앵커 또는 폼 콘트롤 요소에 대한 참고용 콘텐츠입니다. 보통 마우스 오버 또는 키보드 초점을 받으면 표시하는 내용이지만 화면에 항상 표시할 수도 있습니다. 툴팁 요소에 `role="tooltip"` 속성으로 명시할 수 있습니다. 툴팁을 유발하는 앵커 또는 콘트롤에 `aria-describedby="ID reference list"` 속성을 명시하여 연결합니다.
 
 ```
 <!-- O: 인풋 툴팁 -->
@@ -98,9 +98,11 @@
 <p id="TIP-DEL" role="tooltip" hidden>삭제 후 복원할 수 없음.</p>
 ```
 
+`role="alert"` 또는 `role="alertdialog"` 또는 `role="dialog"` 콘텐츠와 혼동하지 않도록 유의합니다.
 
 
-## 4. 알럿.
+
+## 4. 알럿(role="alert").
 
 알럿은 일시적으로 민감한 정보를 사용자에게 전달하는 콘텐츠입니다. 운영체제 또는 브라우저에서 제공하는 시스템 알럿 대신 HTML 마크업으로 스타일 처리한 알럿을 제공할 수 있습니다.
 
@@ -113,17 +115,21 @@
 </div>
 ```
 
-초점을 받을 수 있는 사용자 인터렉션 요소를 포함하고 있다면 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 콘트롤(`input`, `textaria`)의 실시간 오류를 표시하는 경우라면 알럿 대신 콘트롤 요소에 `aria-invalid="true|false"` 속성과 `aria-errormessage="ID reference"` 속성을 사용합니다.
+초점을 받을 수 있는 사용자 인터렉션 요소를 포함하고 있다면 알럿 대화상자 `role="alertdialog"` 또는 대화상자 `role="dialog"`를 사용합니다.
+
+사용자 입력 콘트롤(`input`, `textaria`)의 실시간 오류를 표시하는 경우라면 알럿 대신 콘트롤 요소에 `aria-invalid="true|false"` 속성과 `aria-errormessage="ID reference"` 속성을 사용합니다.
 
 
 
-## 5. 알럿 대화상자.
+## 5. 알럿 대화상자(role="alertdialog").
 
-사용자 인터렉션 요소(`input`, `textarea`, `select`, `button`, `a`)를 포함한 알럿이라면 알럿 `role="alert"` 대신 알럿 대화상자 `role="alertdialog"`를 사용합니다. 알럿 대화상자 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
+간단한 사용자 인터렉션 요소(`input`, `button`)를 포함한 상태로 다른 과업을 차단해야 하는 경우 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 없이 '확인, 취소' 버튼을 제공하는 경우에 적절합니다. 알럿 대화상자 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
 
- 알럿 대화상자에는 `aria-labelledby="ID reference list"` 그리고 `aria-describedby="ID reference list"` 속성으로 알럿의 제목과 설명을 연결합니다.
+ 알럿 대화상자에는 `aria-labelledby="ID reference list"` 그리고 `aria-describedby="ID reference list"` 속성으로 알럿 대화상자의 제목과 설명을 연결합니다.
 
- 알럿 대화상자는 모달 윈도우 스타일로 처리한 다음 `aria-modal="true"` 속성을 추가합니다. 알럿 대화상자를 표시할 때 키보드 초점을 대화상자 내부 콘트롤(예를 들면 '확인' 버튼)으로 옮겨야 합니다. 알럿 대화상자를 표시하는 동안 초점은 대화상자 안에서 벗어나지 않아야 합니다.
+ 알럿 대화상자는 다른 과업을 차단해야 하기 때문에 모달 윈도우 스타일로 처리한 다음 `aria-modal="true"` 속성을 추가합니다.
+
+ 알럿 대화상자를 표시할 때 키보드 초점을 대화상자 내부 첫 번째 콘트롤(예를 들면 '확인' 버튼 또는 '인풋')으로 옮겨야 합니다. 알럿 대화상자를 표시하는 동안 초점은 대화상자 안에서 벗어나지 않아야 합니다.
 
 ```
 <!-- O: 알럿 대화상자 -->
@@ -135,5 +141,32 @@
 </div>
 ```
 
-대중적인 브라우저가 `<dialog>` 요소를 충분히 지원하면 `role="alertdialog"` 속성 대신 `<dialog>` 요소를 사용하는 것이 바람직합니다.
+사용자가 응답할 필요 없는 내용이라면 `role="alert"` 속성이 적절합니다. 사용자가 하위창 맥락으로 벗어나 정보를 입력(`input`, `textarea`, `select`, `button`)하는 경우라면 대화상자 `role="dialog"`가 적절합니다.
 
+
+
+## 6. 대화상자(role="dialog").
+
+대화상자 `role="dialog"`는 사용자 인터렉션이 필요한 현재 문서의 하위창(마치 윈도우 팝업)입니다. 사용자가 정보를 입력하거나 응답하도록 하는 내용(`input`, `textarea`, `select`, `button`)을 반드시 포함합니다.
+
+대화상자에는 `aria-labelledby="ID reference list"` 또는 `aria-label="string"` 속성으로 설명을 제공합니다.
+
+대화상자를 표시할 때 키보드 초점을 대화상자 내부 첫 번째 콘트롤으로 옮겨야 합니다. 대화상자를 표시하는 동안 초점은 대화상자 안에서 벗어나지 않아야 합니다.
+
+모달 윈도우 스타일로 표시할 것인지 여부는 선택 사항입니다. 모달 윈도우 스타일로 처리하는 경우 `aria-modal="true"` 속성을 추가합니다.
+
+```
+<!-- O: 대화상자 -->
+<form role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
+    <h2 id="TITLE">로그인</h2>
+    <label for="ID">아이디</label>
+    <input id="ID">
+    <label for="PW">비밀번호</label>
+    <input id="PW" type="password">
+    <button>로그인</button>
+</form>
+```
+
+사용자의 다른 과업을 차단하면서 '확인, 취소' 버튼만 제공하는 경우라면 `role="alertdialog"` 속성이 적절합니다. 사용자가 응답할 필요 없는 내용이라면 `role="alert"` 속성이 적절합니다.
+
+대중적인 브라우저가 `<dialog>` 요소를 충분히 지원하면 `role="dialog"` 속성 대신 `<dialog>` 요소를 사용하는 것이 바람직합니다.

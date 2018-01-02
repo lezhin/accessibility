@@ -491,8 +491,8 @@
 
 ## 관련 표준
 * [WCAG 2.1](https://www.w3.org/TR/WCAG21/)(WD)
-* [HTML 5.1](https://www.w3.org/TR/html51/)(R)
-* [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria-1.1/)(CR)
+* [HTML 5.2](https://www.w3.org/TR/html52/)(R)
+* [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)(R)
 
 ## License
 Under MIT License. Copyright &copy; 2017 @lezhin.

@@ -4,16 +4,16 @@
 
 
 
-1. [HTML을 의미있게 작성한다.](#1-html-)
-2. [탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`).](#2-role-tablist-tab-tabpanel-)
-3. [툴팁(`role="tooltip"`).](#3-role-tooltip-)
-4. [알럿(`role="alert"`).](#4-role-alert-)
-5. [알럿 대화상자(`role="alertdialog"`).](#5-role-alertdialog-)
-6. [대화상자(`role="dialog"`).](#6-role-dialog-)
-7. [탐색(`nav`, `role="navigation"`).](#7-nav-role-navigation-)
-8. [보충(`aside`, `role="complementary"`).](#8-aside-role-complementary-)
-9. [의미 없음(`role="none"`).](#9-role-none-)
-10. [참고 문서](#-)
+1. [HTML을 의미있게 작성한다.](#html)
+2. [탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`).](#tab)
+3. [툴팁(`role="tooltip"`).](#tooltip)
+4. [알럿(`role="alert"`).](#alert)
+5. [알럿 대화상자(`role="alertdialog"`).](#alertdialog)
+6. [대화상자(`role="dialog"`).](#dialog)
+7. [탐색(`nav`, `role="navigation"`).](#nav)
+8. [보충(`aside`, `role="complementary"`).](#aside)
+9. [의미 없음(`role="none"`).](#none)
+10. [참고 문서](#references)
 
 
 
@@ -50,7 +50,7 @@
 
 
 
-## 1. HTML을 의미있게 작성한다.
+## 1. HTML을 의미있게 작성한다. <a id="html" href="#html">#</a>
 대부분의 WAI-ARIA 명세는 HTML 요소와 속성을 흉내내는 것입니다. 올바른 HTML을 사용한다면 WAI-ARIA 사용을 최소화할 수 있습니다. WAI-ARIA를 사용하기에 앞서 HTML을 의미있게 사용했는지 충분히 검토합니다.
 
 ```
@@ -64,7 +64,7 @@
 
 
 
-## 2. 탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`).
+## 2. 탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`). <a id="tab" href="#tab">#</a>
 
 탭은 스타일을 의미하는 것이 아니라 콘텐츠에 색인을 제공하는 구조(tablist, tab, tabpanel)를 의미합니다. 사이트 탐색 도구에 해당하는 요소는 `nav > h2 + ul` 또는 `aside > h2 + ul` 구조로 마크업 합니다.
 
@@ -100,7 +100,7 @@
 
 
 
-## 3. 툴팁(`role="tooltip"`).
+## 3. 툴팁(`role="tooltip"`). <a id="tooltip" href="#tooltip">#</a>
 
 툴팁은 앵커 또는 폼 콘트롤 요소에 대한 참고용 콘텐츠입니다. 보통 마우스 오버 또는 키보드 초점을 받으면 표시하는 내용이지만 화면에 항상 표시할 수도 있습니다. 툴팁 요소에 `role="tooltip"` 속성으로 명시할 수 있습니다. 툴팁을 유발하는 앵커 또는 콘트롤에 `aria-describedby="ID reference list"` 속성을 명시하여 연결합니다.
 
@@ -119,7 +119,7 @@
 
 
 
-## 4. 알럿(`role="alert"`).
+## 4. 알럿(`role="alert"`). <a id="alert" href="#alert">#</a>
 
 알럿은 일시적으로 민감한 정보를 사용자에게 전달하는 콘텐츠입니다. 운영체제 또는 브라우저에서 제공하는 시스템 알럿 대신 HTML 마크업으로 스타일 처리한 알럿을 제공할 수 있습니다.
 
@@ -138,7 +138,7 @@
 
 
 
-## 5. 알럿 대화상자(`role="alertdialog"`).
+## 5. 알럿 대화상자(`role="alertdialog"`). <a id="alertdialog" href="#alertdialog">#</a>
 
 사용자 동의 또는 확인이 필요한 인터렉션 요소(`input`, `button`)를 포함한 상태로 다른 과업을 차단하는 경우 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 없이 '확인, 취소' 버튼을 제공하는 경우에 적절합니다. 알럿 대화상자 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
 
@@ -162,7 +162,7 @@
 
 
 
-## 6. 대화상자(`role="dialog"`).
+## 6. 대화상자(`role="dialog"`). <a id="dialog" href="#dialog">#</a>
 
 대화상자 `role="dialog"`는 사용자 인터렉션이 필요한 현재 문서의 하위창(마치 윈도우 팝업)입니다. 사용자가 정보를 입력하거나 응답하도록 하는 내용(`input`, `textarea`, `select`, `button`)을 반드시 포함합니다.
 
@@ -190,7 +190,7 @@
 
 
 
-## 7. 탐색(`nav`, `role="navigation"`).
+## 7. 탐색(`nav`, `role="navigation"`). <a id="nav" href="#nav">#</a>
 
 탐색은 현재 페이지 또는 연결된 페이지를 탐색하는 주요 탐색 블록(보통 링크 집합)입니다. 문서의 '주요 내용'을 탐색하는 경우에 사용하면 적절합니다. 모든 링크 집합이 탐색 블록은 아닙니다.
 
@@ -236,7 +236,7 @@
 
 
 
-## 8. 보충(`aside`, `role="complementary"`).
+## 8. 보충(`aside`, `role="complementary"`). <a id="aside" href="#aside">#</a>
 
 보충은 주요 내용을 보완하는 블록입니다. 문서의 '주요 내용'이 아닙니다. 보충을 제거해도 주요 내용에 변함이 없어야 합니다. 주요 내용에서 보충을 분리한 경우에도 보충은 나름의 의미가 있습니다.
 
@@ -282,7 +282,7 @@
 
 
 
-## 9. 의미 없음(`role="none"`).
+## 9. 의미 없음(`role="none"`). <a id="none" href="#none">#</a>
 
 의미 없음(`role="none"`)을 선언하는 경우 보조 기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다.
 
@@ -307,7 +307,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 참고 문서
+## 참고 문서 <a id="references" href="#references">#</a>
 
 * [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)
 * [Using ARIA](https://www.w3.org/TR/using-aria/)

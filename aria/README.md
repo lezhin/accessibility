@@ -1,10 +1,26 @@
 # 레진 WAI-ARIA 가이드라인
 
 [WAI-ARIA](https://www.w3.org/TR/wai-aria-1.1/)는 HTML의 접근성 문제를 보완하는 W3C 명세입니다. WAI-ARIA는 HTML 요소에 `role` 또는 `aria-*` 속성을 추가하여 콘텐츠의 '역할(roles), 상태(states), 속성(properties)' 정보를 보조 기기에 제공합니다.
+
+
+
+1. [HTML을 의미있게 작성한다.](#1-html-)
+2. [탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`).](#2-role-tablist-tab-tabpanel-)
+3. [툴팁(`role="tooltip"`).](#3-role-tooltip-)
+4. [알럿(`role="alert"`).](#4-role-alert-)
+5. [알럿 대화상자(`role="alertdialog"`).](#5-role-alertdialog-)
+6. [대화상자(`role="dialog"`).](#6-role-dialog-)
+7. [탐색(`nav`, `role="navigation"`).](#7-nav-role-navigation-)
+8. [보충(`aside`, `role="complementary"`).](#8-aside-role-complementary-)
+9. [의미 없음(`role="none"`).](#9-role-none-)
+10. [참고 문서](#-)
+
+
+
 ```
 <!-- 레진엔터테인먼트에서 사용하고 있는 WAI-ARIA -->
 
-<!-- 역할 -->
+<!-- 역할(roles) -->
 <element role="tablist">
 <element role="tab">
 <element role="tabpanel">
@@ -12,23 +28,24 @@
 <element role="alert">
 <element role="alertdialog">
 <element role="dialog">
+<element role="navigation">
 <element role="complementary">
 <element role="none">
 
-<!-- 상태 -->
-<element aria-selected="true">
-<element aria-pressed="true">
-<element aria-haspopup="true">
-<element aria-expanded="true">
-<element aria-checked="true">
+<!-- 상태(states) -->
+<element aria-current="true|false|page|step|location|...">
+<element aria-selected="true|false">
+<element aria-haspopup="true|false|dialog|...">
+<element aria-expanded="true|false">
+<element aria-pressed="true|false|mixed">
+<element aria-checked="true|false|mixed">
 
-<!-- 속성 -->
-<element aria-live="polite">
-<element aria-labelledby="id reference list">
-<element aria-label="오늘의 만화">
-<element aria-describedby="id reference list">
-<element aria-controls="id reference list">
-<element aria-current="page">
+<!-- 속성(properties) -->
+<element aria-controls="ID reference list">
+<element aria-live="off|polite|assertive">
+<element aria-labelledby="ID reference list">
+<element aria-label="string">
+<element aria-describedby="ID reference list">
 ```
 
 
@@ -47,7 +64,7 @@
 
 
 
-## 2. 탭 목록, 탭, 탭 패널(`role="tablist"`, `role="tab"`, `role="tabpanel"`).
+## 2. 탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`).
 
 탭은 스타일을 의미하는 것이 아니라 콘텐츠에 색인을 제공하는 구조(tablist, tab, tabpanel)를 의미합니다. 사이트 탐색 도구에 해당하는 요소는 `nav > h2 + ul` 또는 `aside > h2 + ul` 구조로 마크업 합니다.
 
@@ -173,9 +190,55 @@
 
 
 
-## 7. 보충(`aside`, `role="complementary"`).
+## 7. 탐색(`nav`, `role="navigation"`).
 
-보충은 주요 내용을 보완하는 역할을 합니다. 문서의 주요 내용이 아닙니다. 보충을 제거해도 주요 내용에 변함이 없어야 합니다. 주요 내용에서 보충을 분리한 경우에도 보충은 나름의 의미가 있습니다.
+탐색은 현재 페이지 또는 연결된 페이지를 탐색하는 주요 탐색 블록(보통 링크 집합)입니다. 문서의 '주요 내용'을 탐색하는 경우에 사용하면 적절합니다. 모든 링크 집합이 탐색 블록은 아닙니다.
+
+탐색 블록에 적절한 HTML 요소는 `<nav>` 요소입니다. `role="navigation"` 속성을 사용하기 전에 `<nav>` 요소를 먼저 고려하는 것이 좋습니다.
+
+탐색 역할을 하는 요소(`<nav>`, `role="navigation"`)가 문서 안에서 유일한 경우 레이블(`aria-labelledby`, `aria-label`) 제공은 선택입니다. 그러나 탐색 역할을 하는 요소가 둘 이상인 경우 고유한 레이블을 제공해야 합니다.
+
+```
+<!-- O: 탐색에 nav 요소를 권장 -->
+<nav>
+    <h2>글로벌 네비게이션<h2>
+    ...
+</nav>
+
+<!-- O: 탐색 역할을 하는 요소가 유일한 경우 레이블 생략 가능 -->
+<div role="navigation">
+    <h2>글로벌 네비게이션<h2>
+    ...
+</div>
+
+<!-- O: 탐색 역할이 둘 이상인 경우 레이블 제공(nav) -->
+<nav aria-labelledby="global-navigation">
+    <h2 id="global-navigation">글로벌 네비게이션<h2>
+    ...
+</nav>
+<nav aria-labelledby="notice-pagination">
+    <h3 id="notice-pagination">공지사항 페이지네이션<h3>
+    ...
+</nav>
+
+<!-- O: 탐색 역할이 둘 이상인 경우 레이블 제공(role="navigation") -->
+<div role="navigation" aria-labelledby="global-navigation">
+    <h2 id="global-navigation">글로벌 네비게이션<h2>
+    ...
+</div>
+<div role="navigation" aria-labelledby="notice-pagination">
+    <h3 id="notice-pagination">공지사항 페이지네이션<h3>
+    ...
+</div>
+```
+
+`<nav>` 요소는 섹셔닝 콘텐츠이기 때문에 문서 개요(outline)를 생성합니다. 제목 없는 개요를 만들지 않기 위해 헤딩을 제공하는 것이 좋습니다. 레이블 요소(예를 들면 헤딩)가 있는 경우 `aria-labelledby` 속성으로 연결합니다. 레이블 요소(예를 들면 헤딩)가 없는 경우 `aria-label` 속성을 사용합니다.
+
+
+
+## 8. 보충(`aside`, `role="complementary"`).
+
+보충은 주요 내용을 보완하는 블록입니다. 문서의 '주요 내용'이 아닙니다. 보충을 제거해도 주요 내용에 변함이 없어야 합니다. 주요 내용에서 보충을 분리한 경우에도 보충은 나름의 의미가 있습니다.
 
 보충으로 적절한 HTML 요소는 `<aside>` 요소입니다. `role="complementary"` 속성을 사용하기 전에 `<aside>` 요소를 먼저 고려하는 것이 좋습니다.
 
@@ -215,26 +278,27 @@
 </div>
 ```
 
-`<aside>` 요소는 섹셔닝 콘텐츠이기 때문에 문서 개요(outline)를 생성합니다. 제목 없는 개요를 만들지 않기 위해 헤딩을 제공하는 것이 좋습니다. 레이블 요소(예를 들면 헤딩)가 있는 경우 `aria-labelledby` 속성을 사용합니다. 레이블 요소(예를 들면 헤딩)가 없는 경우 `aria-label` 속성을 사용합니다.
+`<aside>` 요소는 섹셔닝 콘텐츠이기 때문에 문서 개요(outline)를 생성합니다. 제목 없는 개요를 만들지 않기 위해 헤딩을 제공하는 것이 좋습니다. 레이블 요소(예를 들면 헤딩)가 있는 경우 `aria-labelledby` 속성으로 연결합니다. 레이블 요소(예를 들면 헤딩)가 없는 경우 `aria-label` 속성을 사용합니다.
 
 
 
-## 8. 의미 없음(role="none").
+## 9. 의미 없음(`role="none"`).
 
 의미 없음(`role="none"`)을 선언하는 경우 보조 기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다.
 
 HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필요한 마크업을 추가한 경우 `role="none"` 속성을 사용할 수 있습니다. 이 속성은 절제해야 합니다.
 
 ```
+<!-- O: tablist와 tab 사이 li 요소의 의미 제거 -->
 <ul role="tablist">
     <li role="none">
         <a href="#home" role="tab" aria-selected="true">Home</a>
     </li>
     <li role="none">
-        <a href="#ongoing" role="tab">ongoing</a>
+        <a href="#ongoing" role="tab">Ongoing</a>
     </li>
     <li role="none">
-        <a href="#ranking" role="tab">ranking</a>
+        <a href="#ranking" role="tab">Ranking</a>
     </li>
 </ul>
 ```

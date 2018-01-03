@@ -218,6 +218,31 @@
 `<aside>` 요소는 섹셔닝 콘텐츠이기 때문에 문서 개요(outline)를 생성합니다. 제목 없는 개요를 만들지 않기 위해 헤딩을 제공하는 것이 좋습니다. 레이블 요소(예를 들면 헤딩)가 있는 경우 `aria-labelledby` 속성을 사용합니다. 레이블 요소(예를 들면 헤딩)가 없는 경우 `aria-label` 속성을 사용합니다.
 
 
+
+## 8. 의미 없음(role="none").
+
+의미 없음(`role="none"`)을 선언하는 경우 보조 기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다.
+
+HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필요한 마크업을 추가한 경우 `role="none"` 속성을 사용할 수 있습니다. 이 속성은 절제해야 합니다.
+
+```
+<ul role="tablist">
+    <li role="none">
+        <a href="#home" role="tab" aria-selected="true">Home</a>
+    </li>
+    <li role="none">
+        <a href="#ongoing" role="tab">ongoing</a>
+    </li>
+    <li role="none">
+        <a href="#ranking" role="tab">ranking</a>
+    </li>
+</ul>
+```
+
+의미 없음(`role="none"`)은 숨김(`hidden`, `aria-hidden="true"`) 속성과 다릅니다. 숨김 속성은 요소와 내용을 모두 감추어 버리지만 `role="none"` 속성은 내용을 드러내고 의미만 감춥니다.
+
+
+
 ## 참고 문서
 
 * [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)

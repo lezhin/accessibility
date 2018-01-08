@@ -33,7 +33,7 @@
 <element role="none">
 
 <!-- 상태(states) -->
-<element aria-current="true|false|page|step|location|...">
+<element aria-current="page|step|location|date|time|true|false">
 <element aria-selected="true|false">
 <element aria-haspopup="true|false|dialog|...">
 <element aria-expanded="true|false">
@@ -292,18 +292,74 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 <!-- O: tablist와 tab 사이 li 요소의 의미 제거 -->
 <ul role="tablist">
     <li role="none">
-        <a href="#home" role="tab" aria-selected="true">Home</a>
+        <a href="#home" role="tab" aria-selected="true">홈</a>
     </li>
     <li role="none">
-        <a href="#ongoing" role="tab">Ongoing</a>
+        <a href="#ongoing" role="tab">연재</a>
     </li>
     <li role="none">
-        <a href="#ranking" role="tab">Ranking</a>
+        <a href="#ranking" role="tab">랭킹</a>
     </li>
 </ul>
 ```
 
 의미 없음(`role="none"`)은 숨김(`hidden`, `aria-hidden="true"`) 속성과 다릅니다. 숨김 속성은 요소와 내용을 모두 감추어 버리지만 `role="none"` 속성은 내용을 드러내고 의미만 감춥니다.
+
+
+
+## 10. 현재 항목(`aria-current="token"`)
+
+`aria-current` 속성은 현재 항목과 일치하는 요소를 의미합니다. `token` 값은 정해진 값 중 하나만 사용할 수 있음을 의미합니다. 예를 들면 `aria-current` 속성의 `token` 값은 `page|step|location|date|time|true|false` 으로 정해져 있고 이 중 하나만 사용할 수 있습니다.
+
+* `page`: 현재 '페이지'와 일치하는 시각적으로 강조한 링크.
+* `step`: 현재 '단계'와 일치하는 시각적으로 강조한 링크.
+* `location`: 플로우 차트에서 현재 '위치'와 일치하는 시각적으로 강조한 이미지.
+* `date`: 달력에서 현재 '날짜'와 일치하는 날짜.
+* `time`: 시간표에서 현재 '시간'과 일치하는 시간.
+
+이 밖에 `true`와 `false` 값도 있습니다. `true` 또는 `false` 값은 현재 항목과 일치 또는 불일치 정보만 전달하고 어떤 맥락(페이지, 단계, 위치, 날짜, 시간)과 일치하는지 여부를 알 수 없기 때문에 토큰 값을 구체적으로 명시할 수 없는 경우에 한정하여 사용하는 것이 좋습니다.
+
+* `true`: 세트 내 현재 항목과 일치함.
+* `false`: 세트 내 현재 항목과 일치하지 않음. 속성 또는 값을 선언하지 않은 경우 초기값.
+
+```
+<!-- O: aria-current="page" 현재 페이지 강조 링크 -->
+<nav>
+    <h2>글로벌 네비게이션</h2>
+    <ul>
+        <li><a href="/home" aria-current="page">홈</a></li>
+        <li><a href="/ongoing">연재</a></li>
+        <li><a href="/ranking">랭킹</a></li>
+    </ul>
+</nav>
+
+<!-- O: aria-current="step" 현재 단계 강조 링크 -->
+<nav>
+    <h2>회원 가입</h2>
+    <ol>
+        <li><a href="/accept-terms" aria-current="setp">약관 동의</a></li>
+        <li><a href="/id-password">아이디/비밀번호 생성</a></li>
+        <li><a href="/email-authentication">이메일 인증</a></li>
+    </ol>
+</nav>
+
+<!-- O: aria-current="location" 현재 위치 강조 이미지 -->
+<img src="is-payment-success.png" alt="결제 성공?" aria-current="location">
+<img src="payment-info.png" alt="결제 내역 안내">
+<img src="payment-fail.png" alt="결제 실패 안내">
+
+<!-- O: aria-current="date" 현재 날짜 강조 -->
+<td aria-curent="date">12/24(토)</td>
+<td>
+    <button type="button" aria-curent="date">12/24(토)</button>
+</td>
+
+<!-- O: aria-current="time" 현재 시간 강조 -->
+<th scope="row" aria-current="time">18:00 ~ 20:00</th>
+<td>무한 도전</td>
+```
+
+`aria-current` 속성은 `aria-selected` 속성과 다른 의미로 사용하기 때문에 `tablist` 목록 안에서 `aria-selected` 속성을 대체하는 용도로 사용하면 안 됩니다. 그러나 `aria-current` 속성과 `aria-selected` 속성을 함께 선언할 수도 있습니다. 예를 들면 편집 가능한 트리 형식의 목록에서 현재 페이지 항목과 편집을 위해 선택한 항목이 일치하는 경우 함께 선언할 수 있습니다.
 
 
 

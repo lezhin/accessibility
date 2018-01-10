@@ -13,7 +13,9 @@
 7. [탐색(`nav`, `role="navigation"`).](#nav)
 8. [보충(`aside`, `role="complementary"`).](#aside)
 9. [의미 없음(`role="none"`).](#none)
-10. [참고 문서](#references)
+10. [현재 항목(`aria-current="token"`).](#aria-current)
+11. [선택 항목(`aria-selected="true|false|undefined"`).](#aria-selected)
+99. [참고 문서](#references)
 
 
 
@@ -33,8 +35,8 @@
 <element role="none">
 
 <!-- 상태(states) -->
-<element aria-current="page|step|location|date|time|true|false">
-<element aria-selected="true|false">
+<element aria-current="page|step|location|date|time|true|false(default)">
+<element aria-selected="false|true|undefined(default)">
 <element aria-haspopup="true|false|dialog|...">
 <element aria-expanded="true|false">
 <element aria-pressed="true|false|mixed">
@@ -73,12 +75,12 @@
 <div class="weekly">
     <div role="tablist">
         <a id="mon-anchor" href="#mon" role="tab" aria-selected="true">월</a>
-        <a id="tue-anchor" href="#tue" role="tab">화</a>
+        <a id="tue-anchor" href="#tue" role="tab" aria-selected="false">화</a>
     </div>
     <div id="mon" tabindex="0" role="tabpanel" aria-labelledby="mon-anchor">
         월요일엔 빨간 장미를...
     </div>
-    <div id="tue" tabindex="0" role="tabpanel" aria-labelledby="tue-anchor">
+    <div id="tue" tabindex="0" role="tabpanel" aria-labelledby="tue-anchor" hidden>
         화요일엔 노란 장미를...
     </div>
 </div>
@@ -87,12 +89,12 @@
 <div class="weekly">
     <div role="tablist">
         <button type="button" id="mon-anchor" aria-controls="mon" role="tab" aria-selected="true">월</button>
-        <button type="button" id="tue-anchor" aria-controls="tue" role="tab">화</button>
+        <button type="button" id="tue-anchor" aria-controls="tue" role="tab" aria-selected="false">화</button>
     </div>
     <div id="mon" tabindex="0" role="tabpanel" aria-labelledby="mon-anchor">
         월요일엔 빨간 장미를...
     </div>
-    <div id="tue" tabindex="0" role="tabpanel" aria-labelledby="tue-anchor">
+    <div id="tue" tabindex="0" role="tabpanel" aria-labelledby="tue-anchor" hidden>
         화요일엔 노란 장미를...
     </div>
 </div>
@@ -295,10 +297,10 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
         <a href="#home" role="tab" aria-selected="true">홈</a>
     </li>
     <li role="none">
-        <a href="#ongoing" role="tab">연재</a>
+        <a href="#ongoing" role="tab" aria-selected="false">연재</a>
     </li>
     <li role="none">
-        <a href="#ranking" role="tab">랭킹</a>
+        <a href="#ranking" role="tab" aria-selected="false">랭킹</a>
     </li>
 </ul>
 ```
@@ -307,9 +309,9 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 10. 현재 항목(`aria-current="token"`)
+## 10. 현재 항목(`aria-current="token"`). <a id="aria-current" href="#aria-current">#</a>
 
-`aria-current` 속성은 현재 항목과 일치하는 요소를 의미합니다. `token` 값은 정해진 값 중 하나만 사용할 수 있음을 의미합니다. 예를 들면 `aria-current` 속성의 `token` 값은 `page|step|location|date|time|true|false` 으로 정해져 있고 이 중 하나만 사용할 수 있습니다.
+`aria-current` 속성은 현재 맥락과 일치하는 항목을 의미합니다. `token` 값은 정해진 값 중 하나만 사용할 수 있음을 의미합니다. 예를 들면 `aria-current` 속성의 `token` 값은 `page|step|location|date|time|true|false(default)` 으로 정해져 있고 이 중 하나만 사용할 수 있습니다.
 
 * `page`: 현재 '페이지'와 일치하는 시각적으로 강조한 링크.
 * `step`: 현재 '단계'와 일치하는 시각적으로 강조한 링크.
@@ -317,10 +319,10 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 * `date`: 달력에서 현재 '날짜'와 일치하는 날짜.
 * `time`: 시간표에서 현재 '시간'과 일치하는 시간.
 
-이 밖에 `true`와 `false` 값도 있습니다. `true` 또는 `false` 값은 현재 항목과 일치 또는 불일치 정보만 전달하고 어떤 맥락(페이지, 단계, 위치, 날짜, 시간)과 일치하는지 여부를 알 수 없기 때문에 토큰 값을 구체적으로 명시할 수 없는 경우에 한정하여 사용하는 것이 좋습니다.
+이 밖에 `true`와 `false` 값도 있습니다. `true` 또는 `false` 값은 구체적으로 어떤 맥락(페이지, 단계, 위치, 날짜, 시간)과 일치하는지 정보를 전달하지 않기 때문에 `page|step|location|date|time` 토큰이 적절하지 않은 맥락에 한하여 사용하는 것이 좋습니다.
 
-* `true`: 세트 내 현재 항목과 일치함.
-* `false`: 세트 내 현재 항목과 일치하지 않음. 속성 또는 값을 선언하지 않은 경우 초기값.
+* `true`: 항목이 세트 내 현재 맥락과 일치함.
+* `false(default)`: 항목이 세트 내 현재 맥락과 일치하지 않음. 속성 또는 값을 선언하지 않은 경우 초기값.
 
 ```
 <!-- O: aria-current="page" 현재 페이지 강조 링크 -->
@@ -360,6 +362,28 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 ```
 
 `aria-current` 속성은 `aria-selected` 속성과 다른 의미로 사용하기 때문에 `tablist` 목록 안에서 `aria-selected` 속성을 대체하는 용도로 사용하면 안 됩니다. 그러나 `aria-current` 속성과 `aria-selected` 속성을 함께 선언할 수도 있습니다. 예를 들면 편집 가능한 트리 형식의 목록에서 현재 페이지 항목과 편집을 위해 선택한 항목이 일치하는 경우 함께 선언할 수 있습니다.
+
+
+
+## 11. 선택 항목(`aria-selected="true|false|undefined"`). <a id="aria-selected" href="#aria-selected">#</a>
+
+`aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 한하여 선택 상태를 명시하는 용도로 사용합니다. `role="tab"` 요소에 가장 흔히 사용합니다. 키보드 초점을 받을 수 있는 요소에 적용하는 것이 효과적입니다.
+
+* `undefined(default)`: 속성 또는 값을 선언하지 않은 경우 초기값. 선택할 수 없음.
+* `true`: 선택 가능한 요소를 선택했음.
+* `false`: 선택 가능한 요소를 선택하지 않았음.
+
+선택 요소에만 `aria-selected="true"` 속성을 적용하면 `aria-selected` 속성을 적용하지 않은 요소는 `aria-selected="undefined"` 상태가 되기 때문에 선택하지 않은 요소에 명시적으로 `aria-selected="false"` 속성과 값을 적용하는 것이 좋습니다.
+
+```
+<!-- O: role="tab" 요소에 선택 상태를 명시 -->
+<div role="tablist">
+    <a id="mon-anchor" href="#mon" role="tab" aria-selected="true">월</a>
+    <a id="tue-anchor" href="#tue" role="tab" aria-selected="false">화</a>
+</div>
+```
+
+`aria-selected` 속성은 `aria-current` 속성과 다른 의미로 사용하기 때문에 혼동하지 않도록 유의합니다. `aria-selected` 속성은 선택 가능한 요소에, `aria-current` 속성은 현재 맥락과 일치하는 요소에 사용합니다. `aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 제한적으로 사용할 수 있습니다. 예를 들면 페이지네이션에서 현재 페이지와 일치하는 링크에는 `aria-selected` 속성이 적절하지 않고 `aria-current` 속성이 적절합니다.
 
 
 

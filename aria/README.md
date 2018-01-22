@@ -15,6 +15,7 @@
 9. [의미 없음(`role="none"`).](#none)
 10. [현재 항목(`aria-current="token"`).](#aria-current)
 11. [선택 항목(`aria-selected="true|false|undefined"`).](#aria-selected)
+12. [팝업 있음(`aria-haspopup="token"`)](#aria-haspopup)
 99. [참고 문서](#references)
 
 
@@ -37,7 +38,7 @@
 <!-- 상태(states) -->
 <element aria-current="page|step|location|date|time|true|false(default)">
 <element aria-selected="false|true|undefined(default)">
-<element aria-haspopup="true|false|dialog|...">
+<element aria-haspopup="true|menu|dialog|listbox|tree|grid|false(default)">
 <element aria-expanded="true|false">
 <element aria-pressed="true|false|mixed">
 <element aria-checked="true|false|mixed">
@@ -68,7 +69,7 @@
 
 ## 2. 탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`). <a id="tab" href="#tab">#</a>
 
-탭은 스타일을 의미하는 것이 아니라 콘텐츠에 색인을 제공하는 구조(tablist, tab, tabpanel)를 의미합니다. 사이트 탐색 도구에 해당하는 요소는 `nav > h2 + ul` 또는 `aside > h2 + ul` 구조로 마크업 합니다.
+탭은 스타일을 의미하는 것이 아니라 현재 페이지 내용에 색인을 제공하는 구조(tablist, tab, tabpanel)를 의미합니다. 사이트 탐색 도구에 해당하는 요소는 `nav > h2 + ul` 또는 `aside > h2 + ul` 구조로 마크업 합니다.
 
 ```
 <!-- O: 앵커 형식 탭 -->
@@ -99,6 +100,8 @@
     </div>
 </div>
 ```
+
+`role` 속성은 값에 따라 적용할 수 있는 HTML 요소가 제한되어 있습니다. 예를 들면 `role="tabpanel"` 속성은 `<ul>`요소에 사용할 수 없으므로 적용 시 HTML5 요소 명세를 확인해야 합니다.
 
 
 
@@ -188,7 +191,7 @@
 
 사용자의 다른 과업을 차단하면서 '확인, 취소' 버튼만 제공하는 경우라면 `role="alertdialog"` 속성이 적절합니다. 사용자가 응답할 필요 없는 내용이라면 `role="alert"` 속성이 적절합니다.
 
-대중적인 브라우저가 `<dialog>` 요소를 충분히 지원하면 `role="dialog"` 속성 대신 `<dialog>` 요소를 사용하는 것이 바람직합니다.
+대중적인 브라우저가 `<dialog>` 요소를 충분히 지원하면 `role="dialog"` 속성 대신 `<dialog>` 요소를 사용합니다.
 
 
 
@@ -196,7 +199,7 @@
 
 탐색은 현재 페이지 또는 연결된 페이지를 탐색하는 주요 탐색 블록(보통 링크 집합)입니다. 문서의 '주요 내용'을 탐색하는 경우에 사용하면 적절합니다. 모든 링크 집합이 탐색 블록은 아닙니다.
 
-탐색 블록에 적절한 HTML 요소는 `<nav>` 요소입니다. `role="navigation"` 속성을 사용하기 전에 `<nav>` 요소를 먼저 고려하는 것이 좋습니다.
+탐색 블록에 적절한 HTML 요소는 `<nav>` 요소입니다. `role="navigation"` 속성을 사용하기 전에 `<nav>` 요소를 먼저 고려합니다.
 
 탐색 역할을 하는 요소(`<nav>`, `role="navigation"`)가 문서 안에서 유일한 경우 레이블(`aria-labelledby`, `aria-label`) 제공은 선택입니다. 그러나 탐색 역할을 하는 요소가 둘 이상인 경우 고유한 레이블을 제공해야 합니다.
 
@@ -234,7 +237,7 @@
 </div>
 ```
 
-`<nav>` 요소는 섹셔닝 콘텐츠이기 때문에 문서 개요(outline)를 생성합니다. 제목 없는 개요를 만들지 않기 위해 헤딩을 제공하는 것이 좋습니다. 레이블 요소(예를 들면 헤딩)가 있는 경우 `aria-labelledby` 속성으로 연결합니다. 레이블 요소(예를 들면 헤딩)가 없는 경우 `aria-label` 속성을 사용합니다.
+`<nav>` 요소는 섹셔닝 콘텐츠이기 때문에 문서 개요(outline)를 생성합니다. 제목 없는 개요를 만들지 않기 위해 헤딩을 제공합니다. 레이블 요소(예를 들면 헤딩)가 있는 경우 `aria-labelledby` 속성으로 연결합니다. 레이블 요소(예를 들면 헤딩)가 없는 경우 `aria-label` 속성을 사용합니다.
 
 
 
@@ -242,7 +245,7 @@
 
 보충은 주요 내용을 보완하는 블록입니다. 문서의 '주요 내용'이 아닙니다. 보충을 제거해도 주요 내용에 변함이 없어야 합니다. 주요 내용에서 보충을 분리한 경우에도 보충은 나름의 의미가 있습니다.
 
-보충으로 적절한 HTML 요소는 `<aside>` 요소입니다. `role="complementary"` 속성을 사용하기 전에 `<aside>` 요소를 먼저 고려하는 것이 좋습니다.
+보충으로 적절한 HTML 요소는 `<aside>` 요소입니다. `role="complementary"` 속성을 사용하기 전에 `<aside>` 요소를 먼저 고려합니다.
 
 보충 역할을 하는 요소(`<aside>`, `role="complementary"`)가 문서 안에서 유일한 경우 레이블(`aria-labelledby`, `aria-label`) 제공은 선택입니다. 그러나 보충 역할을 하는 요소가 둘 이상인 경우 고유한 레이블을 제공해야 합니다.
 
@@ -280,26 +283,26 @@
 </div>
 ```
 
-`<aside>` 요소는 섹셔닝 콘텐츠이기 때문에 문서 개요(outline)를 생성합니다. 제목 없는 개요를 만들지 않기 위해 헤딩을 제공하는 것이 좋습니다. 레이블 요소(예를 들면 헤딩)가 있는 경우 `aria-labelledby` 속성으로 연결합니다. 레이블 요소(예를 들면 헤딩)가 없는 경우 `aria-label` 속성을 사용합니다.
+`<aside>` 요소는 섹셔닝 콘텐츠이기 때문에 문서 개요(outline)를 생성합니다. 제목 없는 개요를 만들지 않기 위해 헤딩을 제공합니다. 레이블 요소(예를 들면 헤딩)가 있는 경우 `aria-labelledby` 속성으로 연결합니다. 레이블 요소(예를 들면 헤딩)가 없는 경우 `aria-label` 속성을 사용합니다.
 
 
 
 ## 9. 의미 없음(`role="none"`). <a id="none" href="#none">#</a>
 
-의미 없음(`role="none"`)을 선언하는 경우 보조 기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다.
+의미 없음(`role="none"`)을 선언하는 경우 보조 기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다. 하위 호환성을 위해 `role="none"` 대신 `role="none presentation"` 형식으로 작성합니다.
 
-HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필요한 마크업을 추가한 경우 `role="none"` 속성을 사용할 수 있습니다. 이 속성은 절제해야 합니다.
+HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필요한 마크업을 추가한 경우 `role="none"` 속성을 사용할 수 있습니다. 의미에 맞지 않는 마크업과 스타일을 위한 마크업을 권장하지 않기 때문에 이 속성은 절제해야 합니다.
 
 ```
 <!-- O: tablist와 tab 사이 li 요소의 의미 제거 -->
 <ul role="tablist">
-    <li role="none">
+    <li role="none presentation">
         <a href="#home" role="tab" aria-selected="true">홈</a>
     </li>
-    <li role="none">
+    <li role="none presentation">
         <a href="#ongoing" role="tab" aria-selected="false">연재</a>
     </li>
-    <li role="none">
+    <li role="none presentation">
         <a href="#ranking" role="tab" aria-selected="false">랭킹</a>
     </li>
 </ul>
@@ -319,7 +322,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 * `date`: 달력에서 현재 '날짜'와 일치하는 날짜.
 * `time`: 시간표에서 현재 '시간'과 일치하는 시간.
 
-이 밖에 `true`와 `false` 값도 있습니다. `true` 또는 `false` 값은 구체적으로 어떤 맥락(페이지, 단계, 위치, 날짜, 시간)과 일치하는지 정보를 전달하지 않기 때문에 `page|step|location|date|time` 토큰이 적절하지 않은 맥락에 한하여 사용하는 것이 좋습니다.
+이 밖에 `true`와 `false` 값도 있습니다. `true` 또는 `false` 값은 구체적으로 어떤 맥락(페이지, 단계, 위치, 날짜, 시간)과 일치하는지 정보를 전달하지 않기 때문에 `page|step|location|date|time` 토큰이 적절하지 않은 맥락에 한하여 사용합니다.
 
 * `true`: 항목이 세트 내 현재 맥락과 일치함.
 * `false(default)`: 항목이 세트 내 현재 맥락과 일치하지 않음. 속성 또는 값을 선언하지 않은 경우 초기값.
@@ -367,13 +370,13 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ## 11. 선택 항목(`aria-selected="true|false|undefined"`). <a id="aria-selected" href="#aria-selected">#</a>
 
-`aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 한하여 선택 상태를 명시하는 용도로 사용합니다. `role="tab"` 요소에 가장 흔히 사용합니다. 키보드 초점을 받을 수 있는 요소에 적용하는 것이 효과적입니다.
+`aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 한하여 선택 상태를 명시하는 용도로 사용합니다. `role="tab"` 요소에 가장 흔히 사용합니다. 키보드 초점을 받을 수 있는 요소에 적용해야 합니다.
 
 * `undefined(default)`: 속성 또는 값을 선언하지 않은 경우 초기값. 선택할 수 없음.
 * `true`: 선택 가능한 요소를 선택했음.
 * `false`: 선택 가능한 요소를 선택하지 않았음.
 
-선택 요소에만 `aria-selected="true"` 속성을 적용하면 `aria-selected` 속성을 적용하지 않은 요소는 `aria-selected="undefined"` 상태가 되기 때문에 선택하지 않은 요소에 명시적으로 `aria-selected="false"` 속성과 값을 적용하는 것이 좋습니다.
+선택 요소에만 `aria-selected="true"` 속성을 적용하면 `aria-selected` 속성을 적용하지 않은 요소는 `aria-selected="undefined"` 상태(선택할 수 없음)가 됩니다. 따라서 선택하지 않은 요소에는 명시적으로 `aria-selected="false"` 속성과 값을 적용합니다.
 
 ```
 <!-- O: role="tab" 요소에 선택 상태를 명시 -->
@@ -384,6 +387,48 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 ```
 
 `aria-selected` 속성은 `aria-current` 속성과 다른 의미로 사용하기 때문에 혼동하지 않도록 유의합니다. `aria-selected` 속성은 선택 가능한 요소에, `aria-current` 속성은 현재 맥락과 일치하는 요소에 사용합니다. `aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 제한적으로 사용할 수 있습니다. 예를 들면 페이지네이션에서 현재 페이지와 일치하는 링크에는 `aria-selected` 속성이 적절하지 않고 `aria-current` 속성이 적절합니다.
+
+
+
+## 12. 팝업 있음(`aria-haspopup="token"`). <a id="aria-haspopup" href="#aria-haspopup">#</a>
+
+`aria-haspopup` 속성은 요소에 연결되어 있는 팝업(메뉴, 대화상자 등) 정보를 제공합니다. 팝업은 다른 내용 위에 표시하는 블럭을 의미합니다. 팝업 유형은 `menu`, `listbox`, `tree`, `grid`, `dialog` 으로 제한되어 있기 때문에 의미가 정확하게 일치하는 경우에만 사용해야 합니다. 일반적으로 `menu`와 `dialog` 유형이 빈번하므로 많이 사용할 것입니다.
+
+* `true`: `menu`와 동일한 의미.
+* `menu`: `menu(role)` 팝업이 연결됨. `menu(role)`는 링크 목록.
+* `dialog`: `dialog(role)` 팝업이 연결됨. `dialog(role)`는 상호작용 요소(버튼 또는 콘트롤)가 포함된 현재 문서의 하위창.
+* `listbox`: `listbox(role)` 팝업이 연결됨. `listbox(role)`는 선택 가능한 `option(role)`을 포함한 콤보박스.
+* `tree`: `tree(role)` 팝업이 연결됨. `tree(role)`는 하위 `list(role)`을 포함하며 접고 펼칠 수 있음.
+* `grid`: `grid(role)` 팝업이 연결됨. `grid(role)`는 행과 열로 구성된 선택 가능한 위젯. 상호작용 가능한 셀이기 때문에 `table(role)`과는 역할이 다름에 유의.
+* `false(default)`: 연결된 팝업이 없음을 의미.
+
+```
+<!-- O: aria-haspopup="true|menu" -->
+<button type="button" id="menu-button" aria-haspopup="true" aria-controls="menu-list" aria-expanded="false">메뉴</button>
+<ul id="menu-list" role="menu" aria-labelledby="menu-button" hidden>
+    <li role="none presentation">
+        <a href="/completed" role="menuitem">완결</a>
+    </li>
+    <li role="none presentation">
+        <a href="/printed" role="menuitem">단행본</a>
+    </li>
+</ul>
+
+<!-- O: aria-haspopup="dialog"-->
+<a href="#login-dialog" aria-haspopup="dialog" aria-controls="login-dialog" aria-expanded="false">로그인</button>
+<section id="login-dialog" role="dialog" aria-labelledby="login-heading" aria-modal="true" hidden>
+    <h2 id="login-heading">로그인</h2>
+    <form>
+        <label for="id-input">아이디</label>
+        <input id="id-input" type="text">
+        <label for="pw-input">비밀번호</label>
+        <input id="pw-input" type="password">
+        <button type="submit">로그인</button>
+    </form>
+</section>
+```
+
+연결한 팝업 `role`이 암시적인 경우에도 `aria-haspopup` 속성을 연결할 수 있습니다. 예를 들어 연결된 팝업이 `<dialog>` 요소라면 암시적으로 `role="dialog"` 속성을 지닌 것이므로 `aria-haspopup="dailog"` 속성을 사용할 수 있습니다. 대중적인 브라우저가 `<dialog>` 요소를 충분히 지원하면 `role="dialog"` 속성 대신 `<dialog>` 요소를 사용합니다.
 
 
 

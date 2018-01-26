@@ -20,7 +20,7 @@
 
 
 
-```
+```html
 <!-- 레진엔터테인먼트에서 사용하고 있는 WAI-ARIA -->
 
 <!-- 역할(roles) -->
@@ -53,10 +53,14 @@
 
 
 
+---
+
+
+
 ## 1. HTML을 의미있게 작성한다. <a id="html" href="#html">#</a>
 대부분의 WAI-ARIA 명세는 HTML 요소와 속성을 흉내내는 것입니다. 올바른 HTML을 사용한다면 WAI-ARIA 사용을 최소화할 수 있습니다. WAI-ARIA를 사용하기에 앞서 HTML을 의미있게 사용했는지 충분히 검토합니다.
 
-```
+```html
 <!-- X -->
 <a href="#" role="button">
 
@@ -67,11 +71,15 @@
 
 
 
+---
+
+
+
 ## 2. 탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`). <a id="tab" href="#tab">#</a>
 
 탭은 스타일을 의미하는 것이 아니라 현재 페이지 내용에 색인을 제공하는 구조(tablist, tab, tabpanel)를 의미합니다. 사이트 탐색 도구에 해당하는 요소는 `nav > h2 + ul` 또는 `aside > h2 + ul` 구조로 마크업 합니다.
 
-```
+```html
 <!-- O: 앵커 형식 탭 -->
 <div class="weekly">
     <div role="tablist">
@@ -105,11 +113,15 @@
 
 
 
+---
+
+
+
 ## 3. 툴팁(`role="tooltip"`). <a id="tooltip" href="#tooltip">#</a>
 
 툴팁은 앵커 또는 폼 콘트롤 요소에 대한 참고용 콘텐츠입니다. 보통 마우스 오버 또는 키보드 초점을 받으면 표시하는 내용이지만 화면에 항상 표시할 수도 있습니다. 툴팁 요소에 `role="tooltip"` 속성으로 명시할 수 있습니다. 툴팁을 유발하는 앵커 또는 콘트롤에 `aria-describedby="ID reference list"` 속성을 명시하여 연결합니다.
 
-```
+```html
 <!-- O: 인풋 툴팁 -->
 <label for="tel">전화번호</label>
 <input id="tel" type="tel" aria-describedby="TIP-TEL">
@@ -124,13 +136,17 @@
 
 
 
+---
+
+
+
 ## 4. 알럿(`role="alert"`). <a id="alert" href="#alert">#</a>
 
 알럿은 일시적으로 민감한 정보를 사용자에게 전달하는 콘텐츠입니다. 운영체제 또는 브라우저에서 제공하는 시스템 알럿 대신 HTML 마크업으로 스타일 처리한 알럿을 제공할 수 있습니다.
 
 초점을 받을 필요가 없는 알럿은 `role="alert"` 으로 처리합니다. 알럿 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
 
-```
+```html
 <!-- O: 알럿 -->
 <div role="alert" aria-live="assertive">
     <p>로그인 후 이용할 수 있습니다.</p>
@@ -140,6 +156,10 @@
 초점을 받을 수 있는 사용자 인터렉션 요소를 포함하고 있다면 알럿 대화상자 `role="alertdialog"` 또는 대화상자 `role="dialog"`를 사용합니다.
 
 사용자 입력 콘트롤(`input`, `textaria`)의 실시간 오류를 표시하는 경우라면 알럿 대신 콘트롤 요소에 `aria-invalid="true|false"` 속성과 `aria-errormessage="ID reference"` 속성을 사용합니다.
+
+
+
+---
 
 
 
@@ -153,7 +173,7 @@
 
  알럿 대화상자를 표시할 때 키보드 초점을 대화상자 내부 첫 번째 콘트롤(예를 들면 '확인' 버튼 또는 '인풋')으로 옮겨야 합니다. 알럿 대화상자를 표시하는 동안 초점은 대화상자 안에서 벗어나지 않아야 합니다.
 
-```
+```html
 <!-- O: 알럿 대화상자 -->
 <div role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
     <h2 id="TITLE">레진패스 안내</h2>
@@ -167,6 +187,10 @@
 
 
 
+---
+
+
+
 ## 6. 대화상자(`role="dialog"`). <a id="dialog" href="#dialog">#</a>
 
 대화상자 `role="dialog"`는 사용자 인터렉션이 필요한 현재 문서의 하위창(마치 윈도우 팝업)입니다. 사용자가 정보를 입력하거나 응답하도록 하는 내용(`input`, `textarea`, `select`, `button`)을 반드시 포함합니다.
@@ -177,7 +201,7 @@
 
 모달 윈도우 스타일로 표시할 것인지 여부는 선택 사항입니다. 모달 윈도우 스타일로 처리하는 경우 `aria-modal="true"` 속성을 추가합니다.
 
-```
+```html
 <!-- O: 대화상자 -->
 <form role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
     <h2 id="TITLE">로그인</h2>
@@ -195,6 +219,10 @@
 
 
 
+---
+
+
+
 ## 7. 탐색(`nav`, `role="navigation"`). <a id="nav" href="#nav">#</a>
 
 탐색은 현재 페이지 또는 연결된 페이지를 탐색하는 주요 탐색 블록(보통 링크 집합)입니다. 문서의 '주요 내용'을 탐색하는 경우에 사용하면 적절합니다. 모든 링크 집합이 탐색 블록은 아닙니다.
@@ -203,7 +231,7 @@
 
 탐색 역할을 하는 요소(`<nav>`, `role="navigation"`)가 문서 안에서 유일한 경우 레이블(`aria-labelledby`, `aria-label`) 제공은 선택입니다. 그러나 탐색 역할을 하는 요소가 둘 이상인 경우 고유한 레이블을 제공해야 합니다.
 
-```
+```html
 <!-- O: 탐색에 nav 요소를 권장 -->
 <nav>
     <h2>글로벌 네비게이션<h2>
@@ -241,6 +269,10 @@
 
 
 
+---
+
+
+
 ## 8. 보충(`aside`, `role="complementary"`). <a id="aside" href="#aside">#</a>
 
 보충은 주요 내용을 보완하는 블록입니다. 문서의 '주요 내용'이 아닙니다. 보충을 제거해도 주요 내용에 변함이 없어야 합니다. 주요 내용에서 보충을 분리한 경우에도 보충은 나름의 의미가 있습니다.
@@ -249,7 +281,7 @@
 
 보충 역할을 하는 요소(`<aside>`, `role="complementary"`)가 문서 안에서 유일한 경우 레이블(`aria-labelledby`, `aria-label`) 제공은 선택입니다. 그러나 보충 역할을 하는 요소가 둘 이상인 경우 고유한 레이블을 제공해야 합니다.
 
-```
+```html
 <!-- O: 보충에 aside 요소를 권장 -->
 <aside>
     <h2>배너/광고<h2>
@@ -287,13 +319,17 @@
 
 
 
+---
+
+
+
 ## 9. 의미 없음(`role="none"`). <a id="none" href="#none">#</a>
 
 의미 없음(`role="none"`)을 선언하는 경우 보조 기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다. 하위 호환성을 위해 `role="none"` 대신 `role="none presentation"` 형식으로 작성합니다.
 
 HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필요한 마크업을 추가한 경우 `role="none"` 속성을 사용할 수 있습니다. 의미에 맞지 않는 마크업과 스타일을 위한 마크업을 권장하지 않기 때문에 이 속성은 절제해야 합니다.
 
-```
+```html
 <!-- O: tablist와 tab 사이 li 요소의 의미 제거 -->
 <ul role="tablist">
     <li role="none presentation">
@@ -312,6 +348,10 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
+---
+
+
+
 ## 10. 현재 항목(`aria-current="token"`). <a id="aria-current" href="#aria-current">#</a>
 
 `aria-current` 속성은 현재 맥락과 일치하는 항목을 의미합니다. `token` 값은 정해진 값 중 하나만 사용할 수 있음을 의미합니다. 예를 들면 `aria-current` 속성의 `token` 값은 `page|step|location|date|time|true|false(default)` 으로 정해져 있고 이 중 하나만 사용할 수 있습니다.
@@ -327,7 +367,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 * `true`: 항목이 세트 내 현재 맥락과 일치함.
 * `false(default)`: 항목이 세트 내 현재 맥락과 일치하지 않음. 속성 또는 값을 선언하지 않은 경우 초기값.
 
-```
+```html
 <!-- O: aria-current="page" 현재 페이지 강조 링크 -->
 <nav>
     <h2>글로벌 네비게이션</h2>
@@ -368,6 +408,10 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
+---
+
+
+
 ## 11. 선택 항목(`aria-selected="true|false|undefined"`). <a id="aria-selected" href="#aria-selected">#</a>
 
 `aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 한하여 선택 상태를 명시하는 용도로 사용합니다. `role="tab"` 요소에 가장 흔히 사용합니다. 키보드 초점을 받을 수 있는 요소에 적용해야 합니다.
@@ -378,7 +422,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 선택 요소에만 `aria-selected="true"` 속성을 적용하면 `aria-selected` 속성을 적용하지 않은 요소는 `aria-selected="undefined"` 상태(선택할 수 없음)가 됩니다. 따라서 선택하지 않은 요소에는 명시적으로 `aria-selected="false"` 속성과 값을 적용합니다.
 
-```
+```html
 <!-- O: role="tab" 요소에 선택 상태를 명시 -->
 <div role="tablist">
     <a id="mon-anchor" href="#mon" role="tab" aria-selected="true">월</a>
@@ -387,6 +431,10 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 ```
 
 `aria-selected` 속성은 `aria-current` 속성과 다른 의미로 사용하기 때문에 혼동하지 않도록 유의합니다. `aria-selected` 속성은 선택 가능한 요소에, `aria-current` 속성은 현재 맥락과 일치하는 요소에 사용합니다. `aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 제한적으로 사용할 수 있습니다. 예를 들면 페이지네이션에서 현재 페이지와 일치하는 링크에는 `aria-selected` 속성이 적절하지 않고 `aria-current` 속성이 적절합니다.
+
+
+
+---
 
 
 
@@ -402,7 +450,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 * `grid`: `grid(role)` 팝업이 연결됨. `grid(role)`는 행과 열로 구성된 선택 가능한 위젯. 상호작용 가능한 셀이기 때문에 `table(role)`과는 역할이 다름에 유의.
 * `false(default)`: 연결된 팝업이 없음을 의미.
 
-```
+```html
 <!-- O: aria-haspopup="true|menu" -->
 <button type="button" id="menu-button" aria-haspopup="true" aria-controls="menu-list" aria-expanded="false">메뉴</button>
 <ul id="menu-list" role="menu" aria-labelledby="menu-button" hidden>
@@ -432,6 +480,10 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
+---
+
+
+
 ## 참고 문서 <a id="references" href="#references">#</a>
 
 * [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)
@@ -439,3 +491,12 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 * [ARIA in HTML](https://www.w3.org/TR/html-aria/)
 * [WAI-ARIA Authoring Practices 1.1](https://www.w3.org/TR/wai-aria-practices/)
 * [ARIA Landmarks Example](https://www.w3.org/TR/wai-aria-practices/examples/landmarks/)
+
+
+
+---
+
+
+
+## License
+Under MIT License. Copyright &copy; @lezhin.

@@ -16,6 +16,8 @@
 10. [현재 항목(`aria-current="token"`).](#aria-current)
 11. [선택 항목(`aria-selected="true|false|undefined"`).](#aria-selected)
 12. [팝업 있음(`aria-haspopup="token"`)](#aria-haspopup)
+13. [확장(`aria-expanded="true|false|undefined"`)](#aria-expanded)
+14. [누름(`aria-pressed="tristate"`)](#aria-pressed)
 99. [참고 문서](#references)
 
 
@@ -39,13 +41,12 @@
 <element aria-current="page|step|location|date|time|true|false(default)">
 <element aria-selected="false|true|undefined(default)">
 <element aria-haspopup="true|menu|dialog|listbox|tree|grid|false(default)">
-<element aria-expanded="true|false">
-<element aria-pressed="true|false|mixed">
-<element aria-checked="true|false|mixed">
+<element aria-expanded="true|false|undefined(default)">
+<element aria-pressed="true|false|mixed|undefined(default)">
 
 <!-- 속성(properties) -->
 <element aria-controls="ID reference list">
-<element aria-live="off|polite|assertive">
+<element aria-live="polite|assertive|off(default)">
 <element aria-labelledby="ID reference list">
 <element aria-label="string">
 <element aria-describedby="ID reference list">
@@ -484,6 +485,80 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
+## 13. 확장(`aria-expanded="true|false|undefinded"`). <a id="aria-expanded" href="#aria-expanded">#</a>
+
+`aria-expanded` 속성은 제어 대상의 확장 또는 축소 상태를 나타냅니다. 어코디언, 메뉴, 콤보박스, 트리와 같이 하위 그룹(또는 독립적인) 내용을 토글(열기, 닫기)하는 경우에 사용하면 적절합니다. 독립적인 내용을 제어할 때 `aria-controls` 속성을 이용하여 제어 대상을 명시해야 합니다.
+
+* `undefined(default)`: 속성 또는 값을 선언하지 않은 경우 초기값. 제어 대상이 없거나 모두 확장 상태. 확장/축소 제어 불가능.
+* `true`: 요소 또는 제어 대상 확장 상태.
+* `false`: 요소 또는 제어 대상 축소 상태.
+
+```html
+<!-- O: 어코디언 -->
+<dt>
+    <button type="button" aria-controls="answer-99" aria-expanded="false">보너스 코인은 언제 소진되나요?</button>
+</dt>
+<dd id="answer-99" hidden>
+    <p>만료기한이 짧은 보너스 코인이 일반 코인보다 먼저 소진됩니다.</p>
+</dd>
+
+<!-- O: 메뉴 -->
+<a id="popular-btn" href="#popular" role="menuitem" aria-haspopup="true" aria-expanded="false">인기</a>
+<ul id="popular" role="menu" aria-labelledby="popular-btn" hidden>
+    <li role="none presentation">
+        <a href="#romance" role="menuitem">로맨스</a>
+    </li>
+    <li role="none presentation">
+        <a href="#drama" role="menuitem">드라마</a>
+    </li>
+</ul>
+```
+
+툴팁, 알럿, 알럿 대화상자, 대화상자와 같은 팝업 또는 모달 팝업 스타일에는 `aria-expanded` 속성을 사용하지 않습니다.
+
+
+
+---
+
+
+
+## 14. 누름(`aria-pressed="tristate"`). <a id="aria-pressed" href="#aria-pressed">#</a>
+
+`aria-pressed` 속성은 토글 버튼(`button`, `role="button"`)이 눌린 상태를 표시합니다. 흔하게 사용하는 속성은 아닙니다. 이 속성을 사용하기 전에 `input[type="radio"]`, `input[type="checkbox"]` 또는 `aria-checked` 또는 `aria-selected` 속성을 먼저 검토하는 것이 좋습니다. 속성 값은 일반적으로 `true` 또는 `false` 두 가지 값을 사용하지만, `tristate` 으로 `true`, `false`, `mixed` 세 가지 상태를 모두 표시할 수도 있습니다. `mixed` 값은 버튼이 제어하는 두 개 이상의 요소 상태값이 모두 `true` 이거나 모두 `false`가 아닌 복합적인 상태를 의미합니다.
+
+* `undefined(default)`: 속성 또는 값을 선언하지 않은 경우 초기값. 누름 상태 표시를 지원하지 않는 버튼.
+* `true`: 버튼을 누른 상태.
+* `false`: 버튼을 누르지 않은 상태.
+* `mixed`: `true` 또는 `false` 값으로 표시할 수 없는 복합적인 상태.
+
+```html
+<!-- O: true/false 모드 -->
+<button type="button" aria-pressed="true">음소거</button>
+<button type="button" aria-pressed="false">음소거</button>
+
+<!-- O: true/false/mixed 모드(이 예제에서 제어 대상이 하나는 true 이고 하나는 false 이다) -->
+<button type="button" aria-pressed="mixed" aria-controls="noti-text noti-sound">알림 켜기</button>
+<ul>
+    <li>
+        <input id="noti-text" type="checkbox" checked>
+        <label for="noti-text">문자 알림</label>
+    </li>
+    <li>
+        <input id="noti-sound" type="checkbox">
+        <label for="noti-sound">소리 알림</label>
+    </li>
+</ul>
+
+```
+
+토글 버튼이 눌린 상태를 시각적으로 표시할 필요가 없는 경우에는 `aria-pressed` 속성을 사용하지 않아야 합니다. 예를 들어 버튼 설명 텍스트를 `배경음 켜기` 그리고 `배경음 끄기` 형태로 동적으로 변경한다면 `aria-pressed` 속성을 선언하는 것이 오히려 혼란을 초래합니다.
+
+
+
+---
+
+
+
 ## 참고 문서 <a id="references" href="#references">#</a>
 
 * [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)
@@ -499,4 +574,4 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 ## License
-Under MIT License. Copyright &copy; @lezhin.
+Under MIT License. Copyright &copy; Lezhin.

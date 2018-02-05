@@ -561,4 +561,4 @@ $(document).on("mouseover focus", ".gnb a", function() { ... });
 
 
 ## License
-Under MIT License. Copyright &copy; @lezhin.
+Under MIT License. Copyright &copy; Lezhin.

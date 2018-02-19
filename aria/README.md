@@ -18,6 +18,7 @@
 12. [팝업 있음(`aria-haspopup="token"`)](#aria-haspopup)
 13. [확장(`aria-expanded="true|false|undefined"`)](#aria-expanded)
 14. [누름(`aria-pressed="tristate"`)](#aria-pressed)
+15. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
 99. [참고 문서](#references)
 
 
@@ -464,7 +465,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 </ul>
 
 <!-- O: aria-haspopup="dialog"-->
-<a href="#login-dialog" aria-haspopup="dialog" aria-controls="login-dialog" aria-expanded="false">로그인</button>
+<a href="#login-dialog" aria-haspopup="dialog">로그인</a>
 <section id="login-dialog" role="dialog" aria-labelledby="login-heading" aria-modal="true" hidden>
     <h2 id="login-heading">로그인</h2>
     <form>
@@ -514,7 +515,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 </ul>
 ```
 
-툴팁, 알럿, 알럿 대화상자, 대화상자와 같은 팝업 또는 모달 팝업 스타일에는 `aria-expanded` 속성을 사용하지 않습니다.
+툴팁(`role="tooltip"`), 알럿(`role="alert"`), 알럿 대화상자(`role="alertdialog"`), 대화상자(`role="dialog"`)와 같이 팝업 스타일을 제어하는 요소에는 `aria-expanded` 속성을 사용하지 않습니다.
 
 
 
@@ -551,7 +552,48 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ```
 
-토글 버튼이 눌린 상태를 시각적으로 표시할 필요가 없는 경우에는 `aria-pressed` 속성을 사용하지 않아야 합니다. 예를 들어 버튼 설명 텍스트를 `배경음 켜기` 그리고 `배경음 끄기` 형태로 동적으로 변경한다면 `aria-pressed` 속성을 선언하는 것이 오히려 혼란을 초래합니다.
+토글 버튼이 눌린 상태를 동적 텍스트로 전달하는 경우에는 `aria-pressed` 속성을 사용하지 않습니다. 예를 들어 버튼 설명 텍스트를 `배경음 켜기` 그리고 `배경음 끄기` 형태로 동적으로 변경한다면 `aria-pressed` 속성을 선언하는 것이 오히려 혼란을 초래합니다.
+
+
+
+---
+
+
+
+## 15. 제어 대상(`aria-controls="ID reference list"`). <a id="aria-controls" href="#aria-controls">#</a>
+
+`aria-controls` 속성은 현재 요소가 제어하는 대상을 명시하는 속성입니다. 주로 `role="tab"`, `aria-haspopup`, `aria-expanded` 속성과 함께 `<button>` 요소가 무엇을 제어하는지 명시합니다. `aria-controls` 속성의 값은 하나 또는 그 이상의 ID 값 입니다. 흔한 경우는 아니지만 ID 값이 여럿인 경우 ID 값을 공백으로 분리합니다.
+
+```html
+<!-- O: role="tab" 요소에 aria-controls 속성 사용 -->
+<div role="tablist">
+    <button type="button" id="mon-anchor" aria-controls="mon" role="tab" aria-selected="true">월</button>
+    <button type="button" id="tue-anchor" aria-controls="tue" role="tab" aria-selected="false">화</button>
+</div>
+<div id="mon" tabindex="0" role="tabpanel" aria-labelledby="mon-anchor">
+    월요일 콘텐츠...
+</div>
+<div id="tue" tabindex="0" role="tabpanel" aria-labelledby="tue-anchor" hidden>
+    화요일 콘텐츠...
+</div>
+
+<!-- O: aria-haspopup 속성과 함께 aria-controls 속성 사용 -->
+<button type="button" aria-haspopup="dialog" aria-controls="login-dialog">로그인</button>
+<section id="login-dialog" role="dialog" aria-labelledby="login-heading" aria-modal="true" hidden>
+    <h2 id="login-heading">로그인</h2>
+    ...
+</section>
+
+<!-- O: aria-expanded 속성과 함께 aria-controls 속성 사용 -->
+<dt>
+    <button type="button" aria-controls="answer-99" aria-expanded="false">보너스 코인은 언제 소진되나요?</button>
+</dt>
+<dd id="answer-99" hidden>
+    <p>만료기한이 짧은 보너스 코인이 일반 코인보다 먼저 소진됩니다.</p>
+</dd>
+```
+
+`<a>` 요소의 `href` 속성값을 통해 참조(제어) 대상을 명시한 경우 `aria-controls` 속성을 사용하지 않습니다.
 
 
 

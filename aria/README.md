@@ -1,6 +1,6 @@
 # 레진 WAI-ARIA 가이드라인
 
-[WAI-ARIA](https://www.w3.org/TR/wai-aria-1.1/)는 HTML의 접근성 문제를 보완하는 W3C 명세입니다. WAI-ARIA는 HTML 요소에 `role` 또는 `aria-*` 속성을 추가하여 콘텐츠의 '역할(roles), 상태(states), 속성(properties)' 정보를 보조 기기에 제공합니다.
+[WAI-ARIA](https://www.w3.org/TR/wai-aria-1.1/)는 HTML의 접근성 문제를 보완하는 W3C 명세입니다. WAI-ARIA는 HTML 요소에 `role` 또는 `aria-*` 속성을 추가하여 콘텐츠의 '역할(roles), 상태(states), 속성(properties)' 정보를 보조기기에 제공합니다.
 
 
 
@@ -19,6 +19,7 @@
 13. [확장(`aria-expanded="true|false|undefined"`)](#aria-expanded)
 14. [누름(`aria-pressed="tristate"`)](#aria-pressed)
 15. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
+16. [실시간(`aria-live="token"`)](#aria-live)
 99. [참고 문서](#references)
 
 
@@ -146,7 +147,7 @@
 
 알럿은 일시적으로 민감한 정보를 사용자에게 전달하는 콘텐츠입니다. 운영체제 또는 브라우저에서 제공하는 시스템 알럿 대신 HTML 마크업으로 스타일 처리한 알럿을 제공할 수 있습니다.
 
-초점을 받을 필요가 없는 알럿은 `role="alert"` 으로 처리합니다. 알럿 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
+초점을 받을 필요가 없는 알럿은 `role="alert"` 으로 처리합니다. 알럿 발생 시 보조기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
 
 ```html
 <!-- O: 알럿 -->
@@ -167,7 +168,7 @@
 
 ## 5. 알럿 대화상자(`role="alertdialog"`). <a id="alertdialog" href="#alertdialog">#</a>
 
-사용자 동의 또는 확인이 필요한 인터렉션 요소(`input`, `button`)를 포함한 상태로 다른 과업을 차단하는 경우 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 없이 '확인, 취소' 버튼을 제공하는 경우에 적절합니다. 알럿 대화상자 발생 시 보조 기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
+사용자 동의 또는 확인이 필요한 인터렉션 요소(`input`, `button`)를 포함한 상태로 다른 과업을 차단하는 경우 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 없이 '확인, 취소' 버튼을 제공하는 경우에 적절합니다. 알럿 대화상자 발생 시 보조기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
 
  알럿 대화상자에는 `aria-labelledby="ID reference list"` 그리고 `aria-describedby="ID reference list"` 속성으로 알럿 대화상자의 제목과 설명을 연결합니다.
 
@@ -327,7 +328,7 @@
 
 ## 9. 의미 없음(`role="none"`). <a id="none" href="#none">#</a>
 
-의미 없음(`role="none"`)을 선언하는 경우 보조 기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다. 하위 호환성을 위해 `role="none"` 대신 `role="none presentation"` 형식으로 작성합니다.
+의미 없음(`role="none"`)을 선언하는 경우 보조기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다. 하위 호환성을 위해 `role="none"` 대신 `role="none presentation"` 형식으로 작성합니다.
 
 HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필요한 마크업을 추가한 경우 `role="none"` 속성을 사용할 수 있습니다. 의미에 맞지 않는 마크업과 스타일을 위한 마크업을 권장하지 않기 때문에 이 속성은 절제해야 합니다.
 
@@ -594,6 +595,37 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 ```
 
 `<a>` 요소의 `href` 속성값을 통해 참조(제어) 대상을 명시한 경우 `aria-controls` 속성을 사용하지 않습니다.
+
+
+
+---
+
+
+
+## 16. 실시간(`aria-live="token"`). <a id="aria-live" href="#aria-live">#</a>
+
+`aria-live` 속성은 실시간으로 내용을 갱신하는 영역을 의미합니다. 값으로 `polite`, `assertive`, `off(default)`를 설정할 수 있으며 갱신하는 내용의 중요도에 따라 선택합니다. 갱신 영역에 `polite`, `assertive`값을 사용하면 갱신하는 순간 보조기기는 사용자에게 내용을 전달합니다. `polite`값은 중요도가 낮은 내용에 사용하여 현재 진행중인 음성 또는 타이핑을 방해하지 않고 뒤늦게 전달합니다. `assertive`값은 중요도가 높은 내용에 사용하여 현재 진행중인 보조기기 작업을 중단하고 갱신 내용을 즉시 사용자에게 전달합니다.
+
+일반적으로 `role` 속성의 값이 `alert`, `alertdialog`, `dialog`인 경우 사용하면 적절합니다. 그 밖에 Ajax 기법을 이용하여 실시간으로 내용을 갱신하는 모든 영역(채팅, 오류, 로그, 상태 표시)에 사용할 수 있습니다.
+
+```html
+<!-- O: 대화상자 -->
+<form role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
+    <h2 id="TITLE">로그인</h2>
+    <label for="ID">아이디</label>
+    <input id="ID">
+    <label for="PW">비밀번호</label>
+    <input id="PW" type="password">
+    <button>로그인</button>
+</form>
+
+<!-- O: 알럿 -->
+<div role="alert" aria-live="assertive">
+    <p>로그인 후 이용할 수 있습니다.</p>
+</div>
+```
+
+`assertive`값은 사용자의 현재 작업을 방해할 수 있기 때문에 중요도가 높은 내용을 선별하여 신중하게 적용해야 합니다.
 
 
 

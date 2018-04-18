@@ -134,8 +134,8 @@
 <p id="TIP-TEL" role="tooltip" hidden>하이픈(-) 없이 숫자만 입력.</p>
 
 <!-- O: 버튼 툴팁 -->
-<button aria-describedby="TIP-DEL">삭제</button>
-<p id="TIP-DEL" role="tooltip" hidden>삭제 후 복원할 수 없음.</p>
+<button aria-describedby="TIP-DEL">게시물 삭제</button>
+<p id="TIP-DEL" role="tooltip" hidden>게시물 삭제 후 복원할 수 없음.</p>
 ```
 
 `role="alert"` 또는 `role="alertdialog"` 또는 `role="dialog"` 콘텐츠와 혼동하지 않도록 유의합니다.
@@ -669,6 +669,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 ```html
+<!-- O: 참조할 설명이 없는 경우 -->
 <form>
     <input type="search" aria-label="웹툰 검색">
     <button>검색</button>
@@ -685,10 +686,23 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ## 19. 자세한 설명 참조(`aria-describedby="ID reference list"`). <a id="aria-describedby" href="#aria-describedby">#</a>
 
-`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다.
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-describedby` 속성은 `ID(s)` 값을 이용하여 '상세한' 내용을 참조(연결)하는 방식으로 설명합니다. 링크(`a`), 폼 콘트롤(`input`, `textarea`, `select`, `button`), 알럿(`role="alert"`), 알럿 대화상자(`role="alertdialog"`) 요소에 사용하면 적절합니다.
 
 ```html
+<!-- O: 버튼 요소에 상세한 설명 제공 -->
+<button aria-describedby="TIP-DEL">게시물 삭제</button>
+<p id="TIP-DEL" role="tooltip" hidden>게시물 삭제 후 복원할 수 없음.</p>
+
+<!-- O: 알럿 대화상자 요소에 상세한 설명 제공 -->
+<div role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
+    <h2 id="TITLE">레진패스 안내</h2>
+    <p id="DESCRIPTION">이 작품의 유료 에피소드 열람 시 자동으로 구매합니다. 레진패스를 적용하시겠습니까?</p>
+    <button type="button">레진패스 적용</button>
+    <button type="button">취소</button>
+</div>
 ```
+
+`aria-describedby` 속성은 간결한 설명을 참조하기에 적절하지 않습니다. 간결한 설명은 `aria-labelledby` 속성을 사용합니다.
 
 
 

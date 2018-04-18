@@ -20,6 +20,9 @@
 14. [누름(`aria-pressed="tristate"`)](#aria-pressed)
 15. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
 16. [실시간(`aria-live="token"`)](#aria-live)
+17. [설명 참조(`aria-labelledby="ID reference list"`)](#aria-labelledby)
+18. [설명(`aria-label="string"`)](#aria-label)
+19. [자세한 설명 참조(`aria-describedby="ID reference list"`)](#aria-describedby)
 99. [참고 문서](#references)
 
 
@@ -633,7 +636,58 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 참고 문서 <a id="references" href="#references">#</a>
+## 17. 설명 참조(`aria-labelledby="ID reference list"`). <a id="aria-labelledby" href="#aria-labelledby">#</a>
+
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-labelledby` 속성은 `ID(s)` 값을 이용하여 간결한 내용을 참조(연결)하는 방식으로 설명합니다. 보통 `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `a`, `button` 요소에 있는 설명을 참조하면 적절합니다.
+
+```html
+<!-- O: 헤딩 설명 참조 -->
+<section role="alert" aria-live="assertive" aria-labelledby="LZ-PATH" hidden>
+    <h2 id="LZ-PATH">레진패스란?</h2>
+    <p>이 작품의 유료 에피소드 열람 시 자동으로 구매합니다.</p>
+</section>
+
+<!-- O: 링크 설명 참조 -->
+<a id="LZ-PATH" href="#LZ-PATH-TEXT">레진패스란?</a>
+<div id="LZ-PATH-TEXT" aria-live="polite" aria-labelledby="LZ-PATH" hidden>
+    <p>이 작품의 유료 에피소드 열람 시 자동으로 구매합니다.</p>
+</div>
+```
+
+`aria-labelledby` 속성으로 숨김 처리한 설명을 참조하면 안 됩니다. 참조가 불가능한 설명은 `aria-label` 속성을 사용합니다. 장황한 설명을 참조하면 안 됩니다. 장황한 설명은 `aria-descibedby` 속성을 사용합니다.
+
+
+---
+
+
+
+## 18. 설명(`aria-label="string"`). <a id="aria-label" href="#aria-label">#</a>
+
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다.
+
+```html
+```
+
+
+
+---
+
+
+
+## 19. 자세한 설명 참조(`aria-describedby="ID reference list"`). <a id="aria-describedby" href="#aria-describedby">#</a>
+
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다.
+
+```html
+```
+
+
+
+---
+
+
+
+## 99. 참고 문서 <a id="references" href="#references">#</a>
 
 * [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)
 * [Using ARIA](https://www.w3.org/TR/using-aria/)

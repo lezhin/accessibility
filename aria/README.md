@@ -638,7 +638,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ## 17. 설명 참조(`aria-labelledby="ID reference list"`). <a id="aria-labelledby" href="#aria-labelledby">#</a>
 
-`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-labelledby` 속성은 `ID(s)` 값을 이용하여 간결한 내용을 참조(연결)하는 방식으로 설명합니다. 보통 `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `a`, `button` 요소에 있는 설명을 참조하면 적절합니다.
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-labelledby` 속성은 `ID(s)` 값을 이용하여 '간결한' 내용을 참조(연결)하는 방식으로 설명합니다. 보통 `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `a`, `button` 요소를 참조하면 적절합니다. `aria-label` 속성과 함께 선언하는 경우 `aria-labelledby` 속성이 우선순위가 높기 때문에 보조기기는 `aria-labelledby` 속성을 설명합니다.
 
 ```html
 <!-- O: 헤딩 설명 참조 -->
@@ -657,16 +657,25 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 `aria-labelledby` 속성으로 숨김 처리한 설명을 참조하면 안 됩니다. 참조가 불가능한 설명은 `aria-label` 속성을 사용합니다. 장황한 설명을 참조하면 안 됩니다. 장황한 설명은 `aria-descibedby` 속성을 사용합니다.
 
 
+
 ---
 
 
 
 ## 18. 설명(`aria-label="string"`). <a id="aria-label" href="#aria-label">#</a>
 
-`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다.
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-label` 속성은 값에 '간결한' 설명(string)을 직접 제공합니다. 가능한 한 `aria-labelledby` 속성을 사용하는 것이 좋습니다. `aria-label` 속성은 현재 요소를 설명할 다른 참조(연결) 요소가 없는 경우에만 사용합니다. `aria-labelledby` 속성과 함께 선언하는 경우 `aria-label` 속성이 우선순위가 낮기 때문에 보조기기는 `aria-labelledby` 속성을 설명합니다.
+
+
 
 ```html
+<form>
+    <input type="search" aria-label="웹툰 검색">
+    <button>검색</button>
+</form>
 ```
+
+`aria-label` 속성을 장황하게 작성하면 안 됩니다. 장황한 설명은 `aria-descibedby` 속성을 사용합니다.
 
 
 
@@ -689,6 +698,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ## 99. 참고 문서 <a id="references" href="#references">#</a>
 
+* [HTML 5.2](https://www.w3.org/TR/html52/)
 * [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)
 * [Using ARIA](https://www.w3.org/TR/using-aria/)
 * [ARIA in HTML](https://www.w3.org/TR/html-aria/)

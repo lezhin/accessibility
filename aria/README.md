@@ -4,7 +4,7 @@
 
 
 
-1. [HTML을 의미있게 작성한다.](#html)
+1. [HTML을 의미 있게 작성한다.](#html)
 2. [탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`).](#tab)
 3. [툴팁(`role="tooltip"`).](#tooltip)
 4. [알럿(`role="alert"`).](#alert)
@@ -13,14 +13,21 @@
 7. [탐색(`nav`, `role="navigation"`).](#nav)
 8. [보충(`aside`, `role="complementary"`).](#aside)
 9. [의미 없음(`role="none"`).](#none)
-10. [현재 항목(`aria-current="token"`).](#aria-current)
-11. [선택 항목(`aria-selected="true|false|undefined"`).](#aria-selected)
-12. [팝업 있음(`aria-haspopup="token"`)](#aria-haspopup)
-13. [확장(`aria-expanded="true|false|undefined"`)](#aria-expanded)
-14. [누름(`aria-pressed="tristate"`)](#aria-pressed)
+10. [현재 상태(`aria-current="token"`).](#aria-current)
+11. [선택 상태(`aria-selected="true|false|undefined"`).](#aria-selected)
+12. [팝업 상태(`aria-haspopup="token"`)](#aria-haspopup)
+13. [확장 상태(`aria-expanded="true|false|undefined"`)](#aria-expanded)
+14. [눌림 상태(`aria-pressed="tristate"`)](#aria-pressed)
 15. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
 16. [실시간(`aria-live="token"`)](#aria-live)
+17. [간결한 설명 참조(`aria-labelledby="ID reference list"`)](#aria-labelledby)
+18. [간결한 설명(`aria-label="string"`)](#aria-label)
+19. [자세한 설명 참조(`aria-describedby="ID reference list"`)](#aria-describedby)
 99. [참고 문서](#references)
+
+
+
+WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 것은 아닙니다. `role` 또는 `aria-*` 속성을 특정 HTML 요소에 사용할 수 있는지 [HTML 5](https://www.w3.org/TR/html52/) 명세를 검토하면서 적용해야 합니다.
 
 
 
@@ -60,8 +67,8 @@
 
 
 
-## 1. HTML을 의미있게 작성한다. <a id="html" href="#html">#</a>
-대부분의 WAI-ARIA 명세는 HTML 요소와 속성을 흉내내는 것입니다. 올바른 HTML을 사용한다면 WAI-ARIA 사용을 최소화할 수 있습니다. WAI-ARIA를 사용하기에 앞서 HTML을 의미있게 사용했는지 충분히 검토합니다.
+## 1. HTML을 의미 있게 작성한다. <a id="html" href="#html">#</a>
+대부분의 WAI-ARIA 명세는 HTML 요소와 속성을 흉내내는 것입니다. 올바른 HTML을 사용한다면 WAI-ARIA 사용을 최소화할 수 있습니다. WAI-ARIA를 사용하기에 앞서 HTML을 의미 있게 사용했는지 충분히 검토합니다.
 
 ```html
 <!-- X -->
@@ -70,7 +77,7 @@
 <!-- O -->
 <button type="button">
 ```
-보조기기는 두 가지 예제를 모두 '버튼'으로 간주할 것입니다. 그러나 첫 번째 예제의 경우 브라우저는 문맥 메뉴를 통해 링크와 관련된 기능(새 탭에서 링크 열기, 링크 주소 복사 등)을 제공하게 되고 사용자를 혼란스럽게 합니다. 또한 첫 번째 예제에서 '버튼' 이라는 설명을 들은 보조기기 사용자는 '스페이스'키를 눌러 버튼 기능을 사용하려고 시도할 수 있습니다. 하지만 `a` 요소는 '엔터' 키 만으로 실행할 수 있습니다. `button` 요소는 '엔터' 키와 '스페이스' 키로 실행할 수 있기 때문에 `a` 요소로부터 '버튼' 이라는 설명을 전해들은 보조기기 사용자를 혼란스럽게 합니다. 결국 올바른 HTML의 선택은 사용자 경험과 접근성 측면에서 모두 중요합니다.
+보조기기는 두 가지 예제를 모두 '버튼'으로 간주할 것입니다. 그러나 첫 번째 예제의 경우 브라우저는 문맥 메뉴를 통해 링크와 관련된 기능(새 탭에서 링크 열기, 링크 주소 복사 등)을 제공하게 되고 사용자를 혼란스럽게 합니다. 또한, 첫 번째 예제에서 '버튼'이라는 설명을 들은 보조기기 사용자는 '스페이스' 키를 눌러 버튼 기능을 사용하려고 시도할 수 있습니다. 하지만 `a` 요소는 '엔터' 키만으로 실행할 수 있습니다. `button` 요소는 '엔터' 키와 '스페이스' 키로 실행할 수 있기 때문에 `a` 요소로부터 '버튼'이라는 설명을 들은 보조기기 사용자를 혼란스럽게 합니다. 결국 올바른 HTML의 선택은 사용자 경험과 접근성 측면에서 모두 중요합니다.
 
 
 
@@ -131,8 +138,8 @@
 <p id="TIP-TEL" role="tooltip" hidden>하이픈(-) 없이 숫자만 입력.</p>
 
 <!-- O: 버튼 툴팁 -->
-<button aria-describedby="TIP-DEL">삭제</button>
-<p id="TIP-DEL" role="tooltip" hidden>삭제 후 복원할 수 없음.</p>
+<button aria-describedby="TIP-DEL">게시물 삭제</button>
+<p id="TIP-DEL" role="tooltip" hidden>게시물 삭제 후 복원할 수 없음.</p>
 ```
 
 `role="alert"` 또는 `role="alertdialog"` 또는 `role="dialog"` 콘텐츠와 혼동하지 않도록 유의합니다.
@@ -355,7 +362,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 10. 현재 항목(`aria-current="token"`). <a id="aria-current" href="#aria-current">#</a>
+## 10. 현재 상태(`aria-current="token"`). <a id="aria-current" href="#aria-current">#</a>
 
 `aria-current` 속성은 현재 맥락과 일치하는 항목을 의미합니다. `token` 값은 정해진 값 중 하나만 사용할 수 있음을 의미합니다. 예를 들면 `aria-current` 속성의 `token` 값은 `page|step|location|date|time|true|false(default)` 으로 정해져 있고 이 중 하나만 사용할 수 있습니다.
 
@@ -415,7 +422,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 11. 선택 항목(`aria-selected="true|false|undefined"`). <a id="aria-selected" href="#aria-selected">#</a>
+## 11. 선택 상태(`aria-selected="true|false|undefined"`). <a id="aria-selected" href="#aria-selected">#</a>
 
 `aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 한하여 선택 상태를 명시하는 용도로 사용합니다. `role="tab"` 요소에 가장 흔히 사용합니다. 키보드 초점을 받을 수 있는 요소에 적용해야 합니다.
 
@@ -441,7 +448,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 12. 팝업 있음(`aria-haspopup="token"`). <a id="aria-haspopup" href="#aria-haspopup">#</a>
+## 12. 팝업 상태(`aria-haspopup="token"`). <a id="aria-haspopup" href="#aria-haspopup">#</a>
 
 `aria-haspopup` 속성은 요소에 연결되어 있는 팝업(메뉴, 대화상자 등) 정보를 제공합니다. 팝업은 다른 내용 위에 표시하는 블럭을 의미합니다. 팝업 유형은 `menu`, `listbox`, `tree`, `grid`, `dialog` 으로 제한되어 있기 때문에 의미가 정확하게 일치하는 경우에만 사용해야 합니다. 일반적으로 `menu`와 `dialog` 유형이 빈번하므로 많이 사용할 것입니다.
 
@@ -487,7 +494,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 13. 확장(`aria-expanded="true|false|undefinded"`). <a id="aria-expanded" href="#aria-expanded">#</a>
+## 13. 확장 상태(`aria-expanded="true|false|undefinded"`). <a id="aria-expanded" href="#aria-expanded">#</a>
 
 `aria-expanded` 속성은 제어 대상의 확장 또는 축소 상태를 나타냅니다. 어코디언, 메뉴, 콤보박스, 트리와 같이 하위 그룹(또는 독립적인) 내용을 토글(열기, 닫기)하는 경우에 사용하면 적절합니다. 독립적인 내용을 제어할 때 `aria-controls` 속성을 이용하여 제어 대상을 명시해야 합니다.
 
@@ -524,7 +531,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 14. 누름(`aria-pressed="tristate"`). <a id="aria-pressed" href="#aria-pressed">#</a>
+## 14. 눌림 상태(`aria-pressed="tristate"`). <a id="aria-pressed" href="#aria-pressed">#</a>
 
 `aria-pressed` 속성은 토글 버튼(`button`, `role="button"`)이 눌린 상태를 표시합니다. 흔하게 사용하는 속성은 아닙니다. 이 속성을 사용하기 전에 `input[type="radio"]`, `input[type="checkbox"]` 또는 `aria-checked` 또는 `aria-selected` 속성을 먼저 검토하는 것이 좋습니다. 속성 값은 일반적으로 `true` 또는 `false` 두 가지 값을 사용하지만, `tristate` 으로 `true`, `false`, `mixed` 세 가지 상태를 모두 표시할 수도 있습니다. `mixed` 값은 버튼이 제어하는 두 개 이상의 요소 상태값이 모두 `true` 이거나 모두 `false`가 아닌 복합적인 상태를 의미합니다.
 
@@ -633,8 +640,83 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 참고 문서 <a id="references" href="#references">#</a>
+## 17. 간결한 설명 참조(`aria-labelledby="ID reference list"`). <a id="aria-labelledby" href="#aria-labelledby">#</a>
 
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-labelledby` 속성은 `ID(s)` 값을 이용하여 '간결한' 내용을 참조(연결)하는 방식으로 설명합니다. 보통 `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `a`, `button` 요소를 참조하면 적절합니다. `aria-label` 속성과 함께 선언하는 경우 `aria-labelledby` 속성이 우선순위가 높기 때문에 보조기기는 `aria-labelledby` 속성을 설명합니다.
+
+```html
+<!-- O: 헤딩 설명 참조 -->
+<section role="alert" aria-live="assertive" aria-labelledby="LZ-PATH" hidden>
+    <h2 id="LZ-PATH">레진패스란?</h2>
+    <p>이 작품의 유료 에피소드 열람 시 자동으로 구매합니다.</p>
+</section>
+
+<!-- O: 링크 설명 참조 -->
+<a id="LZ-PATH" href="#LZ-PATH-TEXT">레진패스란?</a>
+<div id="LZ-PATH-TEXT" aria-live="polite" aria-labelledby="LZ-PATH" hidden>
+    <p>이 작품의 유료 에피소드 열람 시 자동으로 구매합니다.</p>
+</div>
+```
+
+`aria-labelledby` 속성으로 숨김 처리한 설명을 참조하면 안 됩니다. 참조가 불가능한 설명은 `aria-label` 속성을 사용합니다. 자세한 설명을 참조하면 안 됩니다. 자세한 설명은 `aria-descibedby` 속성을 사용합니다.
+
+
+
+---
+
+
+
+## 18. 간결한 설명(`aria-label="string"`). <a id="aria-label" href="#aria-label">#</a>
+
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-label` 속성은 값에 '간결한' 설명(string)을 직접 제공합니다. 가능한 한 `aria-labelledby` 속성을 사용하는 것이 좋습니다. `aria-label` 속성은 현재 요소를 설명할 다른 참조(연결) 요소가 없는 경우에만 사용합니다. `aria-labelledby` 속성과 함께 선언하는 경우 `aria-label` 속성이 우선순위가 낮기 때문에 보조기기는 `aria-labelledby` 속성을 설명합니다.
+
+
+
+```html
+<!-- O: 참조할 설명이 없는 경우 -->
+<form>
+    <input type="search" aria-label="웹툰 검색">
+    <button>검색</button>
+</form>
+```
+
+`aria-label` 속성을 장황하게 작성하면 안 됩니다. 자세한 설명은 `aria-descibedby` 속성을 사용합니다.
+
+
+
+---
+
+
+
+## 19. 자세한 설명 참조(`aria-describedby="ID reference list"`). <a id="aria-describedby" href="#aria-describedby">#</a>
+
+`aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-describedby` 속성은 `ID(s)` 값을 이용하여 '상세한' 내용을 참조(연결)하는 방식으로 설명합니다. 링크(`a`), 폼 콘트롤(`input`, `textarea`, `select`, `button`), 알럿(`role="alert"`), 알럿 대화상자(`role="alertdialog"`) 요소에 사용하면 적절합니다.
+
+```html
+<!-- O: 버튼 요소에 상세한 설명 제공 -->
+<button aria-describedby="TIP-DEL">게시물 삭제</button>
+<p id="TIP-DEL" role="tooltip" hidden>게시물 삭제 후 복원할 수 없음.</p>
+
+<!-- O: 알럿 대화상자 요소에 상세한 설명 제공 -->
+<div role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
+    <h2 id="TITLE">레진패스 안내</h2>
+    <p id="DESCRIPTION">이 작품의 유료 에피소드 열람 시 자동으로 구매합니다. 레진패스를 적용하시겠습니까?</p>
+    <button type="button">레진패스 적용</button>
+    <button type="button">취소</button>
+</div>
+```
+
+`aria-describedby` 속성은 간결한 설명을 참조하기에 적절하지 않습니다. 간결한 설명은 `aria-labelledby` 속성을 사용합니다.
+
+
+
+---
+
+
+
+## 99. 참고 문서 <a id="references" href="#references">#</a>
+
+* [HTML 5.2](https://www.w3.org/TR/html52/)
 * [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)
 * [Using ARIA](https://www.w3.org/TR/using-aria/)
 * [ARIA in HTML](https://www.w3.org/TR/html-aria/)

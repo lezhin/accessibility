@@ -12,7 +12,7 @@
 6. [대화상자(`role="dialog"`).](#dialog)
 7. [탐색(`nav`, `role="navigation"`).](#nav)
 8. [보충(`aside`, `role="complementary"`).](#aside)
-9. [의미 없음(`role="none"`).](#none)
+9. [의미 없음(`role="none presentation"`).](#none)
 10. [현재 상태(`aria-current="token"`).](#aria-current)
 11. [선택 상태(`aria-selected="true|false|undefined"`).](#aria-selected)
 12. [팝업 상태(`aria-haspopup="token"`)](#aria-haspopup)
@@ -44,7 +44,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 <element role="dialog">
 <element role="navigation">
 <element role="complementary">
-<element role="none">
+<element role="none presentation">
 
 <!-- 상태(states) -->
 <element aria-current="page|step|location|date|time|true|false(default)">
@@ -72,10 +72,10 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 ```html
 <!-- X -->
-<a href="#" role="button">
+<a href="#" role="button">...</a>
 
 <!-- O -->
-<button type="button">
+<button type="button">...</button>
 ```
 보조기기는 두 가지 예제를 모두 '버튼'으로 간주할 것입니다. 그러나 첫 번째 예제의 경우 브라우저는 문맥 메뉴를 통해 링크와 관련된 기능(새 탭에서 링크 열기, 링크 주소 복사 등)을 제공하게 되고 사용자를 혼란스럽게 합니다. 또한, 첫 번째 예제에서 '버튼'이라는 설명을 들은 보조기기 사용자는 '스페이스' 키를 눌러 버튼 기능을 사용하려고 시도할 수 있습니다. 하지만 `a` 요소는 '엔터' 키만으로 실행할 수 있습니다. `button` 요소는 '엔터' 키와 '스페이스' 키로 실행할 수 있기 때문에 `a` 요소로부터 '버튼'이라는 설명을 들은 보조기기 사용자를 혼란스럽게 합니다. 결국 올바른 HTML의 선택은 사용자 경험과 접근성 측면에서 모두 중요합니다.
 
@@ -213,14 +213,16 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 ```html
 <!-- O: 대화상자 -->
-<form role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
+<section role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
     <h2 id="TITLE">로그인</h2>
-    <label for="ID">아이디</label>
-    <input id="ID">
-    <label for="PW">비밀번호</label>
-    <input id="PW" type="password">
-    <button>로그인</button>
-</form>
+    <form>
+        <label for="ID">아이디</label>
+        <input id="ID">
+        <label for="PW">비밀번호</label>
+        <input id="PW" type="password">
+        <button>로그인</button>
+    </form>
+</section>
 ```
 
 사용자의 다른 과업을 차단하면서 '확인, 취소' 버튼만 제공하는 경우라면 `role="alertdialog"` 속성이 적절합니다. 사용자가 응답할 필요 없는 내용이라면 `role="alert"` 속성이 적절합니다.
@@ -244,33 +246,33 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 ```html
 <!-- O: 탐색에 nav 요소를 권장 -->
 <nav>
-    <h2>글로벌 네비게이션<h2>
+    <h2>글로벌 네비게이션</h2>
     ...
 </nav>
 
 <!-- O: 탐색 역할을 하는 요소가 유일한 경우 레이블 생략 가능 -->
 <div role="navigation">
-    <h2>글로벌 네비게이션<h2>
+    <h2>글로벌 네비게이션</h2>
     ...
 </div>
 
 <!-- O: 탐색 역할이 둘 이상인 경우 레이블 제공(nav) -->
 <nav aria-labelledby="global-navigation">
-    <h2 id="global-navigation">글로벌 네비게이션<h2>
+    <h2 id="global-navigation">글로벌 네비게이션</h2>
     ...
 </nav>
 <nav aria-labelledby="notice-pagination">
-    <h3 id="notice-pagination">공지사항 페이지네이션<h3>
+    <h3 id="notice-pagination">공지사항 페이지네이션</h3>
     ...
 </nav>
 
 <!-- O: 탐색 역할이 둘 이상인 경우 레이블 제공(role="navigation") -->
 <div role="navigation" aria-labelledby="global-navigation">
-    <h2 id="global-navigation">글로벌 네비게이션<h2>
+    <h2 id="global-navigation">글로벌 네비게이션</h2>
     ...
 </div>
 <div role="navigation" aria-labelledby="notice-pagination">
-    <h3 id="notice-pagination">공지사항 페이지네이션<h3>
+    <h3 id="notice-pagination">공지사항 페이지네이션</h3>
     ...
 </div>
 ```
@@ -294,33 +296,33 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 ```html
 <!-- O: 보충에 aside 요소를 권장 -->
 <aside>
-    <h2>배너/광고<h2>
+    <h2>배너/광고</h2>
     ...
 </aside>
 
 <!-- O: 보충 역할을 하는 요소가 유일한 경우 레이블 생략 가능 -->
 <div role="complementary">
-    <h2>배너/광고<h2>
+    <h2>배너/광고</h2>
     ...
 </div>
 
 <!-- O: 보충 역할이 둘 이상인 경우 레이블 제공(aside) -->
 <aside aria-labelledby="event">
-    <h2 id="event">이벤트<h2>
+    <h2 id="event">이벤트</h2>
     ...
 </aside>
 <aside aria-labelledby="advertisement">
-    <h2 id="advertisement">배너/광고<h2>
+    <h2 id="advertisement">배너/광고</h2>
     ...
 </aside>
 
 <!-- O: 보충 역할이 둘 이상인 경우 레이블 제공(role="complementary") -->
 <div role="complementary" aria-labelledby="event">
-    <h2 id="event">이벤트<h2>
+    <h2 id="event">이벤트</h2>
     ...
 </div>
 <div role="complementary" aria-labelledby="advertisement">
-    <h2 id="advertisement">배너/광고<h2>
+    <h2 id="advertisement">배너/광고</h2>
     ...
 </div>
 ```
@@ -333,7 +335,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 
 
-## 9. 의미 없음(`role="none"`). <a id="none" href="#none">#</a>
+## 9. 의미 없음(`role="none presentation"`). <a id="none" href="#none">#</a>
 
 의미 없음(`role="none"`)을 선언하는 경우 보조기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다. 하위 호환성을 위해 `role="none"` 대신 `role="none presentation"` 형식으로 작성합니다.
 
@@ -512,7 +514,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 </dd>
 
 <!-- O: 메뉴 -->
-<a id="popular-btn" href="#popular" role="menuitem" aria-haspopup="true" aria-expanded="false">인기</a>
+<a id="popular-btn" href="#popular" aria-haspopup="true" aria-expanded="false">인기</a>
 <ul id="popular" role="menu" aria-labelledby="popular-btn" hidden>
     <li role="none presentation">
         <a href="#romance" role="menuitem">로맨스</a>
@@ -617,14 +619,16 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ```html
 <!-- O: 대화상자 -->
-<form role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
+<section role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
     <h2 id="TITLE">로그인</h2>
-    <label for="ID">아이디</label>
-    <input id="ID">
-    <label for="PW">비밀번호</label>
-    <input id="PW" type="password">
-    <button>로그인</button>
-</form>
+    <form>
+        <label for="ID">아이디</label>
+        <input id="ID">
+        <label for="PW">비밀번호</label>
+        <input id="PW" type="password">
+        <button>로그인</button>
+    </form>
+</section>
 
 <!-- O: 알럿 -->
 <div role="alert" aria-live="assertive">

@@ -394,7 +394,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 <nav>
     <h2>회원 가입</h2>
     <ol>
-        <li><a href="/accept-terms" aria-current="setp">약관 동의</a></li>
+        <li><a href="/accept-terms" aria-current="step">약관 동의</a></li>
         <li><a href="/id-password">아이디/비밀번호 생성</a></li>
         <li><a href="/email-authentication">이메일 인증</a></li>
     </ol>

@@ -465,12 +465,12 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 ```html
 <!-- O: aria-haspopup="true|menu" -->
 <button type="button" id="menu-button" aria-haspopup="true" aria-controls="menu-list" aria-expanded="false">메뉴</button>
-<ul id="menu-list" role="menu" aria-labelledby="menu-button" hidden>
-    <li role="none presentation">
-        <a href="/completed" role="menuitem">완결</a>
+<ul id="menu-list" aria-labelledby="menu-button" hidden>
+    <li>
+        <a href="/completed">완결</a>
     </li>
-    <li role="none presentation">
-        <a href="/printed" role="menuitem">단행본</a>
+    <li>
+        <a href="/printed">단행본</a>
     </li>
 </ul>
 
@@ -513,14 +513,14 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
     <p>만료기한이 짧은 보너스 코인이 일반 코인보다 먼저 소진됩니다.</p>
 </dd>
 
-<!-- O: 메뉴 -->
+<!-- O: 팝업 -->
 <a id="popular-btn" href="#popular" aria-haspopup="true" aria-expanded="false">인기</a>
-<ul id="popular" role="menu" aria-labelledby="popular-btn" hidden>
-    <li role="none presentation">
-        <a href="#romance" role="menuitem">로맨스</a>
+<ul id="popular" aria-labelledby="popular-btn" hidden>
+    <li>
+        <a href="#romance">로맨스</a>
     </li>
-    <li role="none presentation">
-        <a href="#drama" role="menuitem">드라마</a>
+    <li>
+        <a href="#drama">드라마</a>
     </li>
 </ul>
 ```

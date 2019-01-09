@@ -19,17 +19,19 @@
 13. [확장 상태(`aria-expanded="true|false|undefined"`)](#aria-expanded)
 14. [눌림 상태(`aria-pressed="tristate"`)](#aria-pressed)
 15. [숨김 상태(`aria-hidden="true|false|undefined"`)](#aria-hidden)
-16. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
-17. [실시간(`aria-live="token"`)](#aria-live)
-18. [간결한 설명 참조(`aria-labelledby="ID reference list"`)](#aria-labelledby)
-19. [간결한 설명(`aria-label="string"`)](#aria-label)
-20. [자세한 설명 참조(`aria-describedby="ID reference list"`)](#aria-describedby)
-21. [모달(`aria-modal="true|false"`)](#aria-modal)
-22. [참고 문서](#references)
+16. [오류 상태(`aria-invalid="true|false|grammer|spelling"`)](#aria-invalid)
+17. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
+18. [실시간(`aria-live="token"`)](#aria-live)
+19. [간결한 설명 참조(`aria-labelledby="ID reference list"`)](#aria-labelledby)
+20. [간결한 설명(`aria-label="string"`)](#aria-label)
+21. [자세한 설명 참조(`aria-describedby="ID reference list"`)](#aria-describedby)
+22. [오류 설명(`aria-errormessage="ID reference"`)](#aria-errormessage)
+23. [모달(`aria-modal="true|false"`)](#aria-modal)
+24. [참고 문서](#references)
 
 
 
-WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 것은 아닙니다. `role` 또는 `aria-*` 속성을 특정 HTML 요소에 사용할 수 있는지 [HTML 5](https://www.w3.org/TR/html52/) 명세를 검토하면서 적용해야 합니다.
+WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 것은 아닙니다. `role` 또는 `aria-*` 속성을 특정 HTML 요소에 사용할 수 있는지 [HTML 5](https://www.w3.org/TR/html52/dom.html#allowed-aria-roles-states-and-properties) 명세를 검토하면서 적용해야 합니다.
 
 
 
@@ -55,6 +57,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 <element aria-expanded="true|false|undefined(default)">
 <element aria-pressed="true|false|mixed|undefined(default)">
 <element aria-hidden="true|false|undefined(default)">
+<element aria-invalid="true|false(default)|grammer|spelling">
 
 <!-- 속성(properties) -->
 <element aria-controls="ID reference list">
@@ -62,6 +65,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 <element aria-labelledby="ID reference list">
 <element aria-label="string">
 <element aria-describedby="ID reference list">
+<element aria-errormessage="ID reference">
 <element aria-modal="true|false(default)">
 ```
 
@@ -605,7 +609,36 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 16. 제어 대상(`aria-controls="ID reference list"`). <a id="aria-controls" href="#aria-controls">#</a>
+## 16. 오류 상태(`aria-invalid="true|false|grammer|spelling"`). <a id="aria-invalid" href="#aria-invalid">#</a>
+
+`aria-invalid` 속성은 주로 `input` 요소에 선언하여 사용자가 입력한 값이 요구하는 형식과 일치하는지 여부를 나타냅니다. `aria-errormessage` 속성과 함께 사용하여 오류 설명을 제공할 수 있습니다.
+
+* `false(default)`: 오류 없음. `aria-invalid` 속성을 선언하지 않거나 값이 없으면 `false`로 간주.
+* `true`: 오류 있음.
+* `grammer`: 문법 오류.
+* `spelling`: 철자 오류.
+
+```
+<!-- O: 입력 값이 유효하면 aria-invalid 속성을 생략 -->
+<label for="email">이메일</label>
+<input id="email" type="email" required value="abc@xyz.xxx" aria-errormessage="email-error-msg">
+<p id="email-error-msg" aria-live="assertive" hidden>이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
+
+<!-- O: 입력 값이 오류이면 aria-invalid="true" 속성을 선언 -->
+<label for="email">이메일</label>
+<input id="email" type="email" required value="..." aria-invalid="true" aria-errormessage="email-error-msg">
+<p id="email-error-msg" aria-live="assertive">이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
+```
+
+`aria-errormessage` 속성은 `aria-invalid` 속성이 없거나 값이 `false`라면 동작하지 않습니다. 입력 값이 비어 있거나 유효하지 않은 초기 값을 제공한 때에는 `aria-invalid="true"`를 선언하지 않아야 합니다.
+
+
+
+---
+
+
+
+## 17. 제어 대상(`aria-controls="ID reference list"`). <a id="aria-controls" href="#aria-controls">#</a>
 
 `aria-controls` 속성은 현재 요소가 제어하는 대상을 명시하는 속성입니다. 주로 `role="tab"`, `aria-haspopup`, `aria-expanded` 속성과 함께 `<button>` 요소가 무엇을 제어하는지 명시합니다. `aria-controls` 속성의 값은 하나 또는 그 이상의 ID 값 입니다. 흔한 경우는 아니지만 ID 값이 여럿인 경우 ID 값을 공백으로 분리합니다.
 
@@ -646,7 +679,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 17. 실시간(`aria-live="token"`). <a id="aria-live" href="#aria-live">#</a>
+## 18. 실시간(`aria-live="token"`). <a id="aria-live" href="#aria-live">#</a>
 
 `aria-live` 속성은 실시간으로 내용을 갱신하는 영역을 의미합니다. 값으로 `polite`, `assertive`, `off(default)`를 설정할 수 있으며 갱신하는 내용의 중요도에 따라 선택합니다. 갱신 영역에 `polite`, `assertive`값을 사용하면 갱신하는 순간 보조기기는 사용자에게 내용을 전달합니다. `polite`값은 중요도가 낮은 내용에 사용하여 현재 진행중인 음성 또는 타이핑을 방해하지 않고 뒤늦게 전달합니다. `assertive`값은 중요도가 높은 내용에 사용하여 현재 진행중인 보조기기 작업을 중단하고 갱신 내용을 즉시 사용자에게 전달합니다.
 
@@ -679,7 +712,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 18. 간결한 설명 참조(`aria-labelledby="ID reference list"`). <a id="aria-labelledby" href="#aria-labelledby">#</a>
+## 19. 간결한 설명 참조(`aria-labelledby="ID reference list"`). <a id="aria-labelledby" href="#aria-labelledby">#</a>
 
 `aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-labelledby` 속성은 `ID(s)` 값을 이용하여 '간결한' 내용을 참조(연결)하는 방식으로 설명합니다. 보통 `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `a`, `button` 요소를 참조하면 적절합니다. `aria-label` 속성과 함께 선언하는 경우 `aria-labelledby` 속성이 우선순위가 높기 때문에 보조기기는 `aria-labelledby` 속성을 설명합니다.
 
@@ -705,7 +738,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 19. 간결한 설명(`aria-label="string"`). <a id="aria-label" href="#aria-label">#</a>
+## 20. 간결한 설명(`aria-label="string"`). <a id="aria-label" href="#aria-label">#</a>
 
 `aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-label` 속성은 값에 '간결한' 설명(string)을 직접 제공합니다. 가능한 한 `aria-labelledby` 속성을 사용하는 것이 좋습니다. `aria-label` 속성은 현재 요소를 설명할 다른 참조(연결) 요소가 없는 경우에만 사용합니다. `aria-labelledby` 속성과 함께 선언하는 경우 `aria-label` 속성이 우선순위가 낮기 때문에 보조기기는 `aria-labelledby` 속성을 설명합니다.
 
@@ -727,7 +760,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 20. 자세한 설명 참조(`aria-describedby="ID reference list"`). <a id="aria-describedby" href="#aria-describedby">#</a>
+## 21. 자세한 설명 참조(`aria-describedby="ID reference list"`). <a id="aria-describedby" href="#aria-describedby">#</a>
 
 `aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-describedby` 속성은 `ID(s)` 값을 이용하여 '상세한' 내용을 참조(연결)하는 방식으로 설명합니다. 링크(`a`), 폼 콘트롤(`input`, `textarea`, `select`, `button`), 알럿(`role="alert"`), 알럿 대화상자(`role="alertdialog"`) 요소에 사용하면 적절합니다.
 
@@ -753,7 +786,26 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 21. 모달(`aria-modal="true|false"`). <a id="aria-modal" href="#aria-modal">#</a>
+## 22. 오류 설명(`aria-errormessage="ID reference"`). <a id="aria-errormessage" href="#aria-errormessage">#</a>
+
+`aria-errormessage` 속성은 주로 `input` 요소에 선언하여 오류 메시지를 제공하는 요소를 값으로 참조합니다. `aria-invalid="true"` 속성을 활성화하면 보조기기는 `aria-errormessage` 속성이 참조하는 요소를 오류 메시지로 전달합니다.
+
+```
+<!-- O: aria-invalid 값이 true이면 보조기기는 aria-errormessage 값을 참조 -->
+<label for="email">이메일</label>
+<input id="email" type="email" required value="..." aria-invalid="true" aria-errormessage="email-error-msg">
+<p id="email-error-msg" aria-live="assertive">이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
+```
+
+`aria-errormessage`가 참조하는 요소를 동적으로 화면에 표시한다면 `aria-live` 속성을 이용해서 실시간으로 보조기기에 오류 메시지를 전달할 수 있습니다. 오류 메시지는 '오류 원인과 해결 방법'을 포함해야 합니다.
+
+
+
+---
+
+
+
+## 23. 모달(`aria-modal="true|false"`). <a id="aria-modal" href="#aria-modal">#</a>
 
 `aria-modal` 속성은 요소가 모달인지 여부를 보조기기에 전달합니다. 모달은 본문 위에 대화상자를 띄워 본문을 차단한 상태로 상호작용하는 요소를 의미합니다. 일반적으로 `role="alertdialog"` 또는 `role="dialog"` 요소를 모달 형태로 표시할 수 있는데 이런 경우 `aria-modal="true"` 속성을 함께 선언합니다.
 
@@ -788,9 +840,10 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ---
 
-## 22. 참고 문서 <a id="references" href="#references">#</a>
+## 24. 참고 문서 <a id="references" href="#references">#</a>
 
 * [HTML 5.2](https://www.w3.org/TR/html52/)
+* [HTML 5.2 - Allowed ARIA roles, states and properties](https://www.w3.org/TR/html52/dom.html#allowed-aria-roles-states-and-properties)
 * [WAI-ARIA 1.1](https://www.w3.org/TR/wai-aria/)
 * [Using ARIA](https://www.w3.org/TR/using-aria/)
 * [ARIA in HTML](https://www.w3.org/TR/html-aria/)

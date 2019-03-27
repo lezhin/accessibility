@@ -533,7 +533,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 </ul>
 ```
 
-툴팁(`role="tooltip"`), 알럿(`role="alert"`), 알럿 대화상자(`role="alertdialog"`), 대화상자(`role="dialog"`)와 같이 팝업 스타일을 제어하는 요소에는 `aria-expanded` 속성을 사용하지 않습니다.
+이 밖에도 툴팁(`role="tooltip"`), 알럿(`role="alert"`), 알럿 대화상자(`role="alertdialog"`), 대화상자(`role="dialog"`)와 같이 동적으로 표시 상태를 결정(토글)하는 요소에 `aria-expanded` 속성을 사용할 수 있습니다.
 
 
 

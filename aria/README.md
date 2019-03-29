@@ -183,7 +183,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 ## 5. 알럿 대화상자(`role="alertdialog"`). <a id="alertdialog" href="#alertdialog">#</a>
 
-사용자 동의 또는 확인이 필요한 인터렉션 요소(`input`, `button`)를 포함한 상태로 다른 과업을 차단하는 경우 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 없이 '확인, 취소' 버튼을 제공하는 경우에 적절합니다. 알럿 대화상자 발생 시 보조기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
+사용자 동의 또는 확인이 필요한 인터렉션 요소(`input`, `button`)를 포함한 상태로 다른 과업을 차단하는 경우 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 없이 '확인, 취소' 버튼을 제공하는 경우에 적절합니다.
 
  알럿 대화상자에는 `aria-labelledby="ID reference list"` 그리고 `aria-describedby="ID reference list"` 속성으로 알럿 대화상자의 제목과 설명을 연결합니다.
 
@@ -193,7 +193,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 ```html
 <!-- O: 알럿 대화상자 -->
-<div role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
+<div role="alertdialog" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
     <h2 id="TITLE">레진패스 안내</h2>
     <p id="DESCRIPTION">이 작품의 유료 에피소드 열람 시 자동으로 구매합니다. 레진패스를 적용하시겠습니까?</p>
     <button type="button">레진패스 적용</button>
@@ -221,7 +221,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 ```html
 <!-- O: 대화상자 -->
-<section role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
+<section role="dialog" aria-modal="true" aria-labelledby="TITLE">
     <h2 id="TITLE">로그인</h2>
     <form>
         <label for="ID">아이디</label>
@@ -592,7 +592,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
     <div class="container" aria-hidden="true">
         // 보조기기가 무시하는 영역
     </div>
-    <div role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
+    <div role="alertdialog" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
         <h2 id="TITLE">레진패스 안내</h2>
         <p id="DESCRIPTION">이 작품의 유료 에피소드 열람 시 자동으로 구매합니다. 레진패스를 적용하시겠습니까?</p>
         <button type="button">레진패스 적용</button>
@@ -618,16 +618,16 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 * `grammer`: 문법 오류.
 * `spelling`: 철자 오류.
 
-```
+```html
 <!-- O: 입력 값이 유효하면 aria-invalid 속성을 생략 -->
 <label for="email">이메일</label>
 <input id="email" type="email" required value="abc@xyz.xxx" aria-errormessage="email-error-msg">
-<p id="email-error-msg" aria-live="assertive" hidden>이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
+<p id="email-error-msg" aria-role="alert" aria-live="assertive" hidden>이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
 
 <!-- O: 입력 값이 오류이면 aria-invalid="true" 속성을 선언 -->
 <label for="email">이메일</label>
 <input id="email" type="email" required value="..." aria-invalid="true" aria-errormessage="email-error-msg">
-<p id="email-error-msg" aria-live="assertive">이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
+<p id="email-error-msg" aria-role="alert" aria-live="assertive">이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
 ```
 
 `aria-errormessage` 속성은 `aria-invalid` 속성이 없거나 값이 `false`라면 동작하지 않습니다. 입력 값이 비어 있거나 유효하지 않은 초기 값을 제공한 때에는 `aria-invalid="true"`를 선언하지 않아야 합니다.
@@ -683,21 +683,9 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 `aria-live` 속성은 실시간으로 내용을 갱신하는 영역을 의미합니다. 값으로 `polite`, `assertive`, `off(default)`를 설정할 수 있으며 갱신하는 내용의 중요도에 따라 선택합니다. 갱신 영역에 `polite`, `assertive`값을 사용하면 갱신하는 순간 보조기기는 사용자에게 내용을 전달합니다. `polite`값은 중요도가 낮은 내용에 사용하여 현재 진행중인 음성 또는 타이핑을 방해하지 않고 뒤늦게 전달합니다. `assertive`값은 중요도가 높은 내용에 사용하여 현재 진행중인 보조기기 작업을 중단하고 갱신 내용을 즉시 사용자에게 전달합니다.
 
-일반적으로 `role` 속성의 값이 `alert`, `alertdialog`, `dialog`인 경우 사용하면 적절합니다. 그 밖에 Ajax 기법을 이용하여 실시간으로 내용을 갱신하는 모든 영역(채팅, 오류, 로그, 상태 표시)에 사용할 수 있습니다.
+일반적으로 `role` 속성의 값이 `alert`인 경우 사용하면 적절합니다. 그 밖에 Ajax 기법을 이용하여 실시간으로 내용을 갱신하는 모든 영역(채팅, 오류, 로그, 상태 표시)에 사용할 수 있습니다.
 
 ```html
-<!-- O: 대화상자 -->
-<section role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
-    <h2 id="TITLE">로그인</h2>
-    <form>
-        <label for="ID">아이디</label>
-        <input id="ID">
-        <label for="PW">비밀번호</label>
-        <input id="PW" type="password">
-        <button>로그인</button>
-    </form>
-</section>
-
 <!-- O: 알럿 -->
 <div role="alert" aria-live="assertive">
     <p>로그인 후 이용할 수 있습니다.</p>
@@ -718,14 +706,14 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ```html
 <!-- O: 헤딩 설명 참조 -->
-<section role="alert" aria-live="assertive" aria-labelledby="LZ-PATH" hidden>
+<section aria-labelledby="LZ-PATH" hidden>
     <h2 id="LZ-PATH">레진패스란?</h2>
     <p>이 작품의 유료 에피소드 열람 시 자동으로 구매합니다.</p>
 </section>
 
 <!-- O: 링크 설명 참조 -->
 <a id="LZ-PATH" href="#LZ-PATH-TEXT">레진패스란?</a>
-<div id="LZ-PATH-TEXT" aria-live="polite" aria-labelledby="LZ-PATH" hidden>
+<div id="LZ-PATH-TEXT" aria-labelledby="LZ-PATH" hidden>
     <p>이 작품의 유료 에피소드 열람 시 자동으로 구매합니다.</p>
 </div>
 ```
@@ -770,7 +758,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 <p id="TIP-DEL" role="tooltip" hidden>게시물 삭제 후 복원할 수 없음.</p>
 
 <!-- O: 알럿 대화상자 요소에 상세한 설명 제공 -->
-<div role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
+<div role="alertdialog" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
     <h2 id="TITLE">레진패스 안내</h2>
     <p id="DESCRIPTION">이 작품의 유료 에피소드 열람 시 자동으로 구매합니다. 레진패스를 적용하시겠습니까?</p>
     <button type="button">레진패스 적용</button>
@@ -790,11 +778,11 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 `aria-errormessage` 속성은 주로 `input` 요소에 선언하여 오류 메시지를 제공하는 요소를 값으로 참조합니다. `aria-invalid="true"` 속성을 활성화하면 보조기기는 `aria-errormessage` 속성이 참조하는 요소를 오류 메시지로 전달합니다.
 
-```
+```html
 <!-- O: aria-invalid 값이 true이면 보조기기는 aria-errormessage 값을 참조 -->
 <label for="email">이메일</label>
 <input id="email" type="email" required value="..." aria-invalid="true" aria-errormessage="email-error-msg">
-<p id="email-error-msg" aria-live="assertive">이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
+<p id="email-error-msg" role="alert" aria-live="assertive">이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
 ```
 
 `aria-errormessage`가 참조하는 요소를 동적으로 화면에 표시한다면 `aria-live` 속성을 이용해서 실시간으로 보조기기에 오류 메시지를 전달할 수 있습니다. 오류 메시지는 '오류 원인과 해결 방법'을 포함해야 합니다.
@@ -814,7 +802,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ```html
 <!-- O: 알럿 대화상자에 aria-modal="true" 선언 -->
-<div role="alertdialog" aria-live="assertive" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
+<div role="alertdialog" aria-modal="true" aria-labelledby="TITLE" aria-describedby="DESCRIPTION">
     <h2 id="TITLE">레진패스 안내</h2>
     <p id="DESCRIPTION">이 작품의 유료 에피소드 열람 시 자동으로 구매합니다. 레진패스를 적용하시겠습니까?</p>
     <button type="button">레진패스 적용</button>
@@ -822,7 +810,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 </div>
 
 <!-- O: 대화상자에 aria-modal="true" 선언 -->
-<section role="dialog" aria-live="polite" aria-modal="true" aria-labelledby="TITLE">
+<section role="dialog" aria-modal="true" aria-labelledby="TITLE">
     <h2 id="TITLE">로그인</h2>
     <form>
         <label for="ID">아이디</label>

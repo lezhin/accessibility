@@ -471,9 +471,9 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 * `false(default)`: 연결된 팝업이 없음을 의미.
 
 ```html
-<!-- O: aria-haspopup="true|menu" -->
-<button type="button" id="menu-button" aria-haspopup="true" aria-controls="menu-list" aria-expanded="false">메뉴</button>
-<ul id="menu-list" aria-labelledby="menu-button" hidden>
+<!-- O: aria-haspopup="menu|true" -->
+<button type="button" id="menu-button" aria-haspopup="menu" aria-controls="menu-list" aria-expanded="false">메뉴</button>
+<ul id="menu-list" role="menu" aria-labelledby="menu-button" hidden>
     <li>
         <a href="/completed">완결</a>
     </li>
@@ -522,8 +522,8 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 </dd>
 
 <!-- O: 팝업 -->
-<a id="popular-btn" href="#popular" aria-haspopup="true" aria-expanded="false">인기</a>
-<ul id="popular" aria-labelledby="popular-btn" hidden>
+<a id="popular-btn" href="#popular" aria-haspopup="menu" aria-expanded="false">인기</a>
+<ul id="popular" role="menu" aria-labelledby="popular-btn" hidden>
     <li>
         <a href="#romance">로맨스</a>
     </li>

@@ -7,27 +7,28 @@
 1. [HTML을 의미 있게 작성한다.](#html)
 2. [탭 목록, 탭, 탭 패널(`role="tablist|tab|tabpanel"`).](#tab)
 3. [툴팁(`role="tooltip"`).](#tooltip)
-4. [알럿(`role="alert"`).](#alert)
-5. [알럿 대화상자(`role="alertdialog"`).](#alertdialog)
-6. [대화상자(`role="dialog"`).](#dialog)
-7. [탐색(`nav`, `role="navigation"`).](#nav)
-8. [보충(`aside`, `role="complementary"`).](#aside)
-9. [의미 없음(`role="none presentation"`).](#none)
-10. [현재 상태(`aria-current="token"`).](#aria-current)
-11. [선택 상태(`aria-selected="true|false|undefined"`).](#aria-selected)
-12. [팝업 상태(`aria-haspopup="token"`)](#aria-haspopup)
-13. [확장 상태(`aria-expanded="true|false|undefined"`)](#aria-expanded)
-14. [눌림 상태(`aria-pressed="tristate"`)](#aria-pressed)
-15. [숨김 상태(`aria-hidden="true|false|undefined"`)](#aria-hidden)
-16. [오류 상태(`aria-invalid="true|false|grammer|spelling"`)](#aria-invalid)
-17. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
-18. [실시간(`aria-live="token"`)](#aria-live)
-19. [간결한 설명 참조(`aria-labelledby="ID reference list"`)](#aria-labelledby)
-20. [간결한 설명(`aria-label="string"`)](#aria-label)
-21. [자세한 설명 참조(`aria-describedby="ID reference list"`)](#aria-describedby)
-22. [오류 설명(`aria-errormessage="ID reference"`)](#aria-errormessage)
-23. [모달(`aria-modal="true|false"`)](#aria-modal)
-24. [참고 문서](#references)
+4. [성공(결과) 메시지(`role="status"`).](#status)
+5. [오류(제안) 메시지(`role="alert"`).](#alert)
+6. [알럿 대화상자(`role="alertdialog"`).](#alertdialog)
+7. [대화상자(`role="dialog"`).](#dialog)
+8. [탐색(`nav`, `role="navigation"`).](#nav)
+9. [보충(`aside`, `role="complementary"`).](#aside)
+10. [의미 없음(`role="none"`).](#none)
+11. [현재 상태(`aria-current="token"`).](#aria-current)
+12. [선택 상태(`aria-selected="true|false|undefined"`).](#aria-selected)
+13. [팝업 상태(`aria-haspopup="token"`)](#aria-haspopup)
+14. [확장 상태(`aria-expanded="true|false|undefined"`)](#aria-expanded)
+15. [눌림 상태(`aria-pressed="tristate"`)](#aria-pressed)
+16. [숨김 상태(`aria-hidden="true|false|undefined"`)](#aria-hidden)
+17. [오류 상태(`aria-invalid="true|false|grammer|spelling"`)](#aria-invalid)
+18. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
+19. [실시간(`aria-live="token"`)](#aria-live)
+20. [간결한 설명 참조(`aria-labelledby="ID reference list"`)](#aria-labelledby)
+21. [간결한 설명(`aria-label="string"`)](#aria-label)
+22. [자세한 설명 참조(`aria-describedby="ID reference list"`)](#aria-describedby)
+23. [오류 설명(`aria-errormessage="ID reference"`)](#aria-errormessage)
+24. [모달(`aria-modal="true|false"`)](#aria-modal)
+25. [참고 문서](#references)
 
 
 
@@ -43,12 +44,13 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 <element role="tab">
 <element role="tabpanel">
 <element role="tooltip">
+<element role="status">
 <element role="alert">
 <element role="alertdialog">
 <element role="dialog">
 <element role="navigation">
 <element role="complementary">
-<element role="none presentation">
+<element role="none">
 
 <!-- 상태(states) -->
 <element aria-current="page|step|location|date|time|true|false(default)">
@@ -158,22 +160,22 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 
 
-## 4. 알럿(`role="alert"`). <a id="alert" href="#alert">#</a>
+## 4. 성공(결과) 메시지(`role="status"`). <a id="status" href="#status">#</a>
 
-알럿은 일시적으로 민감한 정보를 사용자에게 전달하는 콘텐츠입니다. 운영체제 또는 브라우저에서 제공하는 시스템 알럿 대신 HTML 마크업으로 스타일 처리한 알럿을 제공할 수 있습니다.
+성공(또는 결과) 상태 메시지를 사용자에게 전달하는 콘텐츠입니다. 성공 `role="status"` 메시지가 자바스크립트 알럿 `window.alert`과 다른 것은 키보드 초점을 임의로 변경하지 않고(사용자의 현재 작업을 방해하지 않고) 보조기기 사용자에게 메시지를 전달하는 것을 의도하고 있다는 점입니다.
 
-초점을 받을 필요가 없는 알럿은 `role="alert"` 으로 처리합니다. 알럿 발생 시 보조기기에 실시간으로 알림을 전달하려면 `aria-live="assertive"` 속성을 명시합니다.
+성공 `role="status"` 메시지는 초점을 받지 않도록 처리해야 합니다. `role="status"` 요소는 `aria-live="polite"` 속성과 `aria-atomic="true"` 속성을 암시적으로 할당하기 때문에 추가로 선언할 필요가 없습니다. 성공 메시지 영역을 변경하면 화면 낭독기는 현재 진행 중인 음성 안내를 마친 후 성공 메시지 전체 내용을 사용자에게 전달합니다.
 
 ```html
-<!-- O: 알럿 -->
-<div role="alert" aria-live="assertive">
-    <p>로그인 후 이용할 수 있습니다.</p>
-</div>
+<!-- O: 성공 메시지 -->
+<p role="status">회원가입 양식 전송완료.</p>
+
+<!-- O: 결과 메시지 -->
+<p role="status">10개의 검색 결과.</p>
+<p role="status">장바구니에 5개의 항목.</p>
 ```
 
 초점을 받을 수 있는 사용자 인터렉션 요소를 포함하고 있다면 알럿 대화상자 `role="alertdialog"` 또는 대화상자 `role="dialog"`를 사용합니다.
-
-사용자 입력 콘트롤(`input`, `textaria`)의 실시간 오류를 표시하는 경우라면 알럿 대신 콘트롤 요소에 `aria-invalid="true|false"` 속성과 `aria-errormessage="ID reference"` 속성을 사용합니다.
 
 
 
@@ -181,7 +183,31 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 
 
-## 5. 알럿 대화상자(`role="alertdialog"`). <a id="alertdialog" href="#alertdialog">#</a>
+## 5. 오류(제안) 메시지(`role="alert"`). <a id="alert" href="#alert">#</a>
+
+오류(또는 제안) 상태 메시지를 사용자에게 전달하는 콘텐츠입니다. 오류 `role="alert"` 메시지가 자바스크립트 알럿 `window.alert`과 다른 것은 키보드 초점을 임의로 변경하지 않고(사용자의 현재 작업을 방해하지 않고) 보조기기 사용자에게 메시지를 전달하는 것을 의도하고 있다는 점입니다.
+
+오류 `role="alert"` 메시지는 초점을 받지 않도록 처리해야 합니다. `role="alert"` 요소는 `aria-live="assertive"` 속성과 `aria-atomic="true"` 속성을 암시적으로 할당하기 때문에 추가로 선언할 필요가 없습니다. 오류 메시지 영역을 변경하면 화면 낭독기는 현재 진행 중인 음성 안내를 즉시 멈추고 오류 메시지 전체 내용을 사용자에게 전달합니다.
+
+```html
+<!-- O: 오류 메시지 -->
+<p role="alert">우편번호 입력 오류.</p>
+
+<!-- O: 제안 메시지 -->
+<p role="alert">로그인 후 이용 가능.</p>
+```
+
+초점을 받을 수 있는 사용자 인터렉션 요소를 포함하고 있다면 알럿 대화상자 `role="alertdialog"` 또는 대화상자 `role="dialog"`를 사용합니다.
+
+사용자 입력 콘트롤(`input`, `textaria`)의 실시간 오류를 표시하는 경우라면 오류 메시지 대신 콘트롤 요소에 `aria-invalid="true|false"` 속성과 `aria-errormessage="ID reference"` 속성을 사용합니다.
+
+
+
+---
+
+
+
+## 6. 알럿 대화상자(`role="alertdialog"`). <a id="alertdialog" href="#alertdialog">#</a>
 
 사용자 동의 또는 확인이 필요한 인터렉션 요소(`input`, `button`)를 포함한 상태로 다른 과업을 차단하는 경우 알럿 대화상자 `role="alertdialog"`를 사용합니다. 사용자 입력 없이 '확인, 취소' 버튼을 제공하는 경우에 적절합니다.
 
@@ -209,7 +235,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 
 
-## 6. 대화상자(`role="dialog"`). <a id="dialog" href="#dialog">#</a>
+## 7. 대화상자(`role="dialog"`). <a id="dialog" href="#dialog">#</a>
 
 대화상자 `role="dialog"`는 사용자 인터렉션이 필요한 현재 문서의 하위창(마치 윈도우 팝업)입니다. 사용자가 정보를 입력하거나 응답하도록 하는 내용(`input`, `textarea`, `select`, `button`)을 반드시 포함합니다.
 
@@ -243,7 +269,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 
 
-## 7. 탐색(`nav`, `role="navigation"`). <a id="nav" href="#nav">#</a>
+## 8. 탐색(`nav`, `role="navigation"`). <a id="nav" href="#nav">#</a>
 
 탐색은 현재 페이지 또는 연결된 페이지를 탐색하는 주요 탐색 블록(보통 링크 집합)입니다. 문서의 '주요 내용'을 탐색하는 경우에 사용하면 적절합니다. 모든 링크 집합이 탐색 블록은 아닙니다.
 
@@ -293,7 +319,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 
 
-## 8. 보충(`aside`, `role="complementary"`). <a id="aside" href="#aside">#</a>
+## 9. 보충(`aside`, `role="complementary"`). <a id="aside" href="#aside">#</a>
 
 보충은 주요 내용을 보완하는 블록입니다. 문서의 '주요 내용'이 아닙니다. 보충을 제거해도 주요 내용에 변함이 없어야 합니다. 주요 내용에서 보충을 분리한 경우에도 보충은 나름의 의미가 있습니다.
 
@@ -343,22 +369,22 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 
 
 
-## 9. 의미 없음(`role="none presentation"`). <a id="none" href="#none">#</a>
+## 10. 의미 없음(`role="none"`). <a id="none" href="#none">#</a>
 
-의미 없음(`role="none"`)을 선언하는 경우 보조기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다. 하위 호환성을 위해 `role="none"` 대신 `role="none presentation"` 형식으로 작성합니다.
+의미 없음(`role="none"`)을 선언하는 경우 보조기기는 마크업의 의미를 제거 후 내용만 사용자에게 전달합니다. `role="none"` 속성은 `role="presentation"`과 동일하며 `role="presentation"`을 대체합니다.
 
 HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필요한 마크업을 추가한 경우 `role="none"` 속성을 사용할 수 있습니다. 의미에 맞지 않는 마크업과 스타일을 위한 마크업을 권장하지 않기 때문에 이 속성은 절제해야 합니다.
 
 ```html
 <!-- O: tablist와 tab 사이 li 요소의 의미 제거 -->
 <ul role="tablist">
-    <li role="none presentation">
+    <li role="none">
         <a href="#home" role="tab" aria-selected="true">홈</a>
     </li>
-    <li role="none presentation">
+    <li role="none">
         <a href="#ongoing" role="tab" aria-selected="false">연재</a>
     </li>
-    <li role="none presentation">
+    <li role="none">
         <a href="#ranking" role="tab" aria-selected="false">랭킹</a>
     </li>
 </ul>
@@ -372,7 +398,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 10. 현재 상태(`aria-current="token"`). <a id="aria-current" href="#aria-current">#</a>
+## 11. 현재 상태(`aria-current="token"`). <a id="aria-current" href="#aria-current">#</a>
 
 `aria-current` 속성은 현재 맥락과 일치하는 항목을 의미합니다. `token` 값은 정해진 값 중 하나만 사용할 수 있음을 의미합니다. 예를 들면 `aria-current` 속성의 `token` 값은 `page|step|location|date|time|true|false(default)` 으로 정해져 있고 이 중 하나만 사용할 수 있습니다.
 
@@ -432,7 +458,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 11. 선택 상태(`aria-selected="true|false|undefined"`). <a id="aria-selected" href="#aria-selected">#</a>
+## 12. 선택 상태(`aria-selected="true|false|undefined"`). <a id="aria-selected" href="#aria-selected">#</a>
 
 `aria-selected` 속성은 단일 또는 다중 선택이 가능한 요소(`role="gridcell|option|row|tab"`)에 한하여 선택 상태를 명시하는 용도로 사용합니다. `role="tab"` 요소에 가장 흔히 사용합니다. 키보드 초점을 받을 수 있는 요소에 적용해야 합니다.
 
@@ -458,7 +484,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 12. 팝업 상태(`aria-haspopup="token"`). <a id="aria-haspopup" href="#aria-haspopup">#</a>
+## 13. 팝업 상태(`aria-haspopup="token"`). <a id="aria-haspopup" href="#aria-haspopup">#</a>
 
 `aria-haspopup` 속성은 요소에 연결되어 있는 팝업(메뉴, 대화상자 등) 정보를 제공합니다. 팝업은 다른 내용 위에 표시하는 블럭을 의미합니다. 팝업 유형은 `menu`, `listbox`, `tree`, `grid`, `dialog` 으로 제한되어 있기 때문에 의미가 정확하게 일치하는 경우에만 사용해야 합니다. 일반적으로 `menu`와 `dialog` 유형이 빈번하므로 많이 사용할 것입니다.
 
@@ -504,7 +530,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 13. 확장 상태(`aria-expanded="true|false|undefinded"`). <a id="aria-expanded" href="#aria-expanded">#</a>
+## 14. 확장 상태(`aria-expanded="true|false|undefinded"`). <a id="aria-expanded" href="#aria-expanded">#</a>
 
 `aria-expanded` 속성은 제어 대상의 확장 또는 축소 상태를 나타냅니다. 어코디언, 메뉴, 콤보박스, 트리와 같이 하위 그룹(또는 독립적인) 내용을 토글(열기, 닫기)하는 경우에 사용하면 적절합니다. 독립적인 내용을 제어할 때 `aria-controls` 속성을 이용하여 제어 대상을 명시해야 합니다.
 
@@ -541,7 +567,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 14. 눌림 상태(`aria-pressed="tristate"`). <a id="aria-pressed" href="#aria-pressed">#</a>
+## 15. 눌림 상태(`aria-pressed="tristate"`). <a id="aria-pressed" href="#aria-pressed">#</a>
 
 `aria-pressed` 속성은 토글 버튼(`button`, `role="button"`)이 눌린 상태를 표시합니다. 흔하게 사용하는 속성은 아닙니다. 이 속성을 사용하기 전에 `input[type="radio"]`, `input[type="checkbox"]` 또는 `aria-checked` 또는 `aria-selected` 속성을 먼저 검토하는 것이 좋습니다. 속성 값은 일반적으로 `true` 또는 `false` 두 가지 값을 사용하지만, `tristate` 으로 `true`, `false`, `mixed` 세 가지 상태를 모두 표시할 수도 있습니다. `mixed` 값은 버튼이 제어하는 두 개 이상의 요소 상태값이 모두 `true` 이거나 모두 `false`가 아닌 복합적인 상태를 의미합니다.
 
@@ -578,7 +604,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 15. 숨김 상태(`aria-hidden="true|false|undefined"`). <a id="aria-hidden" href="#aria-hidden">#</a>
+## 16. 숨김 상태(`aria-hidden="true|false|undefined"`). <a id="aria-hidden" href="#aria-hidden">#</a>
 
 `aria-hidden` 속성은 접근성 API(보조기기 접근 가능성) 차단 상태를 결정합니다. 화면에 표시하지만 잠시 사용을 제한하는 콘텐츠에 적용합니다. 예를 들면 모달 대화상자를 화면에 표시할 때 모달 대화상자 뒤 본문 콘텐츠에 `aria-hidden="true"` 속성을 선언하면 보조기기가 무시합니다.
 
@@ -609,7 +635,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 16. 오류 상태(`aria-invalid="true|false|grammer|spelling"`). <a id="aria-invalid" href="#aria-invalid">#</a>
+## 17. 오류 상태(`aria-invalid="true|false|grammer|spelling"`). <a id="aria-invalid" href="#aria-invalid">#</a>
 
 `aria-invalid` 속성은 주로 `input` 요소에 선언하여 사용자가 입력한 값이 요구하는 형식과 일치하는지 여부를 나타냅니다. `aria-errormessage` 속성과 함께 사용하여 오류 설명을 제공할 수 있습니다.
 
@@ -638,7 +664,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 17. 제어 대상(`aria-controls="ID reference list"`). <a id="aria-controls" href="#aria-controls">#</a>
+## 18. 제어 대상(`aria-controls="ID reference list"`). <a id="aria-controls" href="#aria-controls">#</a>
 
 `aria-controls` 속성은 현재 요소가 제어하는 대상을 명시하는 속성입니다. 주로 `role="tab"`, `aria-haspopup`, `aria-expanded` 속성과 함께 `<button>` 요소가 무엇을 제어하는지 명시합니다. `aria-controls` 속성의 값은 하나 또는 그 이상의 ID 값 입니다. 흔한 경우는 아니지만 ID 값이 여럿인 경우 ID 값을 공백으로 분리합니다.
 
@@ -679,7 +705,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 18. 실시간(`aria-live="token"`). <a id="aria-live" href="#aria-live">#</a>
+## 19. 실시간(`aria-live="token"`). <a id="aria-live" href="#aria-live">#</a>
 
 `aria-live` 속성은 실시간으로 내용을 갱신하는 영역을 의미합니다. 값으로 `polite`, `assertive`, `off(default)`를 설정할 수 있으며 갱신하는 내용의 중요도에 따라 선택합니다. 갱신 영역에 `polite`, `assertive`값을 사용하면 갱신하는 순간 보조기기는 사용자에게 내용을 전달합니다. `polite`값은 중요도가 낮은 내용에 사용하여 현재 진행중인 음성 또는 타이핑을 방해하지 않고 뒤늦게 전달합니다. `assertive`값은 중요도가 높은 내용에 사용하여 현재 진행중인 보조기기 작업을 중단하고 갱신 내용을 즉시 사용자에게 전달합니다.
 
@@ -700,7 +726,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 19. 간결한 설명 참조(`aria-labelledby="ID reference list"`). <a id="aria-labelledby" href="#aria-labelledby">#</a>
+## 20. 간결한 설명 참조(`aria-labelledby="ID reference list"`). <a id="aria-labelledby" href="#aria-labelledby">#</a>
 
 `aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-labelledby` 속성은 `ID(s)` 값을 이용하여 '간결한' 내용을 참조(연결)하는 방식으로 설명합니다. 보통 `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `a`, `button` 요소를 참조하면 적절합니다. `aria-label` 속성과 함께 선언하는 경우 `aria-labelledby` 속성이 우선순위가 높기 때문에 보조기기는 `aria-labelledby` 속성을 설명합니다.
 
@@ -726,7 +752,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 20. 간결한 설명(`aria-label="string"`). <a id="aria-label" href="#aria-label">#</a>
+## 21. 간결한 설명(`aria-label="string"`). <a id="aria-label" href="#aria-label">#</a>
 
 `aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-label` 속성은 값에 '간결한' 설명(string)을 직접 제공합니다. 가능한 한 `aria-labelledby` 속성을 사용하는 것이 좋습니다. `aria-label` 속성은 현재 요소를 설명할 다른 참조(연결) 요소가 없는 경우에만 사용합니다. `aria-labelledby` 속성과 함께 선언하는 경우 `aria-label` 속성이 우선순위가 낮기 때문에 보조기기는 `aria-labelledby` 속성을 설명합니다.
 
@@ -748,7 +774,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 21. 자세한 설명 참조(`aria-describedby="ID reference list"`). <a id="aria-describedby" href="#aria-describedby">#</a>
+## 22. 자세한 설명 참조(`aria-describedby="ID reference list"`). <a id="aria-describedby" href="#aria-describedby">#</a>
 
 `aria-labelledby`, `aria-label`, `aria-describedby` 속성은 모두 현재 요소에 설명을 제공하는 속성입니다. `aria-describedby` 속성은 `ID(s)` 값을 이용하여 '상세한' 내용을 참조(연결)하는 방식으로 설명합니다. 링크(`a`), 폼 콘트롤(`input`, `textarea`, `select`, `button`), 알럿(`role="alert"`), 알럿 대화상자(`role="alertdialog"`) 요소에 사용하면 적절합니다.
 
@@ -774,7 +800,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 22. 오류 설명(`aria-errormessage="ID reference"`). <a id="aria-errormessage" href="#aria-errormessage">#</a>
+## 23. 오류 설명(`aria-errormessage="ID reference"`). <a id="aria-errormessage" href="#aria-errormessage">#</a>
 
 `aria-errormessage` 속성은 주로 `input` 요소에 선언하여 오류 메시지를 제공하는 요소를 값으로 참조합니다. `aria-invalid="true"` 속성을 활성화하면 보조기기는 `aria-errormessage` 속성이 참조하는 요소를 오류 메시지로 전달합니다.
 
@@ -793,7 +819,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 23. 모달(`aria-modal="true|false"`). <a id="aria-modal" href="#aria-modal">#</a>
+## 24. 모달(`aria-modal="true|false"`). <a id="aria-modal" href="#aria-modal">#</a>
 
 `aria-modal` 속성은 요소가 모달인지 여부를 보조기기에 전달합니다. 모달은 본문 위에 대화상자를 띄워 본문을 차단한 상태로 상호작용하는 요소를 의미합니다. 일반적으로 `role="alertdialog"` 또는 `role="dialog"` 요소를 모달 형태로 표시할 수 있는데 이런 경우 `aria-modal="true"` 속성을 함께 선언합니다.
 
@@ -828,7 +854,7 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 ---
 
-## 24. 참고 문서 <a id="references" href="#references">#</a>
+## 25. 참고 문서 <a id="references" href="#references">#</a>
 
 * [HTML 5.2](https://www.w3.org/TR/html52/)
 * [HTML 5.2 - Allowed ARIA roles, states and properties](https://www.w3.org/TR/html52/dom.html#allowed-aria-roles-states-and-properties)

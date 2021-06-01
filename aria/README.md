@@ -20,7 +20,7 @@
 14. [확장 상태(`aria-expanded="true|false|undefined"`)](#aria-expanded)
 15. [눌림 상태(`aria-pressed="tristate"`)](#aria-pressed)
 16. [숨김 상태(`aria-hidden="true|false|undefined"`)](#aria-hidden)
-17. [오류 상태(`aria-invalid="true|false|grammer|spelling"`)](#aria-invalid)
+17. [오류 상태(`aria-invalid="true|false|grammar|spelling"`)](#aria-invalid)
 18. [제어 대상(`aria-controls="ID reference list"`)](#aria-controls)
 19. [실시간(`aria-live="token"`)](#aria-live)
 20. [간결한 설명 참조(`aria-labelledby="ID reference list"`)](#aria-labelledby)

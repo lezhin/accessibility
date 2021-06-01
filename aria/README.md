@@ -32,7 +32,7 @@
 
 
 
-WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 것은 아닙니다. `role` 또는 `aria-*` 속성을 특정 HTML 요소에 사용할 수 있는지 [HTML 5](https://www.w3.org/TR/html52/dom.html#allowed-aria-roles-states-and-properties) 명세를 검토하면서 적용해야 합니다.
+WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 것은 아닙니다. `role` 또는 `aria-*` 속성을 특정 HTML 요소에 사용할 수 있는지 [ARIA in HTML](https://w3c.github.io/html-aria/#docconformance) 명세를 검토하면서 적용해야 합니다.
 
 
 

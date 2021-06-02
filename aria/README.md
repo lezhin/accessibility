@@ -59,7 +59,7 @@ WAI-ARIA 속성을 모든 HTML 요소에 무분별하게 사용할 수 있는 �
 <element aria-expanded="true|false|undefined(default)">
 <element aria-pressed="true|false|mixed|undefined(default)">
 <element aria-hidden="true|false|undefined(default)">
-<element aria-invalid="true|false(default)|grammer|spelling">
+<element aria-invalid="true|false(default)|grammar|spelling">
 
 <!-- 속성(properties) -->
 <element aria-controls="ID reference list">
@@ -635,13 +635,13 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 
 
 
-## 17. 오류 상태(`aria-invalid="true|false|grammer|spelling"`). <a id="aria-invalid" href="#aria-invalid">#</a>
+## 17. 오류 상태(`aria-invalid="true|false|grammar|spelling"`). <a id="aria-invalid" href="#aria-invalid">#</a>
 
 `aria-invalid` 속성은 주로 `input` 요소에 선언하여 사용자가 입력한 값이 요구하는 형식과 일치하는지 여부를 나타냅니다. `aria-errormessage` 속성과 함께 사용하여 오류 설명을 제공할 수 있습니다.
 
 * `false(default)`: 오류 없음. `aria-invalid` 속성을 선언하지 않거나 값이 없으면 `false`로 간주.
 * `true`: 오류 있음.
-* `grammer`: 문법 오류.
+* `grammar`: 문법 오류.
 * `spelling`: 철자 오류.
 
 ```html

@@ -109,7 +109,7 @@
 
 ### 평가 도구
 * [Colour Contrast Check](https://snook.ca/technical/colour_contrast/colour.html#fg=33FF33,bg=333333)
-* [ColorA11y](https://chrome.google.com/webstore/detail/colora11y/icfneoldcbdmgaiocnnobpbbjncdfbfb?hl=ko)
+* [Accessible Color Generator](https://learnui.design/tools/accessible-color-generator.html)
 
 
 

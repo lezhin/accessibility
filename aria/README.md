@@ -648,12 +648,12 @@ HTML을 의미에 맞지 않게 마크업한 경우, 또는 스타일링에 필�
 <!-- O: 입력 값이 유효하면 aria-invalid 속성을 생략 -->
 <label for="email">이메일</label>
 <input id="email" type="email" required value="abc@xyz.xxx" aria-errormessage="email-error-msg">
-<p id="email-error-msg" aria-role="alert" aria-live="assertive" hidden>이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
+<p id="email-error-msg" role="alert" aria-live="assertive" hidden>이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
 
 <!-- O: 입력 값이 오류이면 aria-invalid="true" 속성을 선언 -->
 <label for="email">이메일</label>
 <input id="email" type="email" required value="..." aria-invalid="true" aria-errormessage="email-error-msg">
-<p id="email-error-msg" aria-role="alert" aria-live="assertive">이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
+<p id="email-error-msg" role="alert" aria-live="assertive">이메일 형식이 유효하지 않습니다. 앳(@)과 마침표(.)를 포함해 주세요.</p>
 ```
 
 `aria-errormessage` 속성은 `aria-invalid` 속성이 없거나 값이 `false`라면 동작하지 않습니다. 입력 값이 비어 있거나 유효하지 않은 초기 값을 제공한 때에는 `aria-invalid="true"`를 선언하지 않아야 합니다.
